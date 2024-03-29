@@ -1,5 +1,4 @@
-# COMP3005 W24 Project V2: Health and Fitness Club Management System
-
+# COMP3004 Project
 ### Group Members:
 
 - Danielle Nkem
