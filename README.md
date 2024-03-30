@@ -4,7 +4,7 @@
 - Danielle Nkem
 - Charles Yan
 - Kaitlyn Warhurst
-- Emtiaz Alam
+- Emtiaz Alam, 101114889
 - Jearina Tseung
 
 TA: Vishal
