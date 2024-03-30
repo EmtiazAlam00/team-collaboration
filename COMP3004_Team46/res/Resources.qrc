@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>buttons/powerButton.svg</file>
+	<file>buttons/chargeButton.svg</file>
+    </qresource>
+</RCC>
