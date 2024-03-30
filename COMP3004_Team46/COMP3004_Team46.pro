@@ -14,10 +14,12 @@ resources_dir = res
 
 SOURCES += \
     $${source_dir}/main.cpp \
-    $${source_dir}/mainwindow.cpp
+    $${source_dir}/mainwindow.cpp \
+    src/menu.cpp
 
 HEADERS += \
-    $${source_dir}/mainwindow.h
+    $${source_dir}/mainwindow.h \
+    src/menu.h
 
 FORMS += \
     $${forms_dir}/mainwindow.ui
