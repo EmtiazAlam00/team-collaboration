@@ -17,9 +17,9 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>423</x>
+      <x>413</x>
       <y>70</y>
-      <width>361</width>
+      <width>371</width>
       <height>331</height>
      </rect>
     </property>
@@ -65,58 +65,6 @@
         </property>
         <item>
          <layout class="QGridLayout" name="adminTabQGridLayout">
-          <item row="3" column="0">
-           <widget class="QLabel" name="applyToSkinAdminLabel_2">
-            <property name="minimumSize">
-             <size>
-              <width>518</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>BLUE LED</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QPushButton" name="blueOnButton">
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QComboBox" name="applyToSkinAdminBox">
-            <property name="minimumSize">
-             <size>
-              <width>82</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>82</width>
-              <height>30</height>
-             </size>
-            </property>
-            <item>
-             <property name="text">
-              <string>FALSE</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>TRUE</string>
-             </property>
-            </item>
-           </widget>
-          </item>
           <item row="0" column="1" alignment="Qt::AlignHCenter">
            <widget class="QPushButton" name="chargeAdminButton">
             <property name="minimumSize">
@@ -147,22 +95,17 @@ QPushButton:pressed {
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="batteryLevelAdminLabel">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="blueOffButton">
             <property name="text">
-             <string>Battery Level</string>
+             <string>OFF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="blueOnButton">
+            <property name="text">
+             <string>ON</string>
             </property>
            </widget>
           </item>
@@ -222,8 +165,86 @@ QPushButton:pressed {
             </property>
            </widget>
           </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="redOnButton">
+            <property name="text">
+             <string>ON</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="applyToSkinAdminBox">
+            <property name="minimumSize">
+             <size>
+              <width>82</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>82</width>
+              <height>30</height>
+             </size>
+            </property>
+            <item>
+             <property name="text">
+              <string>FALSE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TRUE</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="batteryLevelAdminLabel">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Battery Level</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QPushButton" name="greenOffButton">
+            <property name="text">
+             <string>OFF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="blueled">
+            <property name="minimumSize">
+             <size>
+              <width>518</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>BLUE LED</string>
+            </property>
+           </widget>
+          </item>
           <item row="6" column="0">
-           <widget class="QLabel" name="applyToSkinAdminLabel_4">
+           <widget class="QLabel" name="redled">
             <property name="minimumSize">
              <size>
               <width>518</width>
@@ -255,7 +276,7 @@ QPushButton:pressed {
            </spacer>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="applyToSkinAdminLabel_3">
+           <widget class="QLabel" name="greenled">
             <property name="minimumSize">
              <size>
               <width>518</width>
@@ -273,20 +294,6 @@ QPushButton:pressed {
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QPushButton" name="blueOffButton">
-            <property name="text">
-             <string>OFF</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QPushButton" name="greenOffButton">
-            <property name="text">
-             <string>OFF</string>
-            </property>
-           </widget>
-          </item>
           <item row="6" column="2">
            <widget class="QPushButton" name="redOffButton">
             <property name="text">
@@ -301,10 +308,36 @@ QPushButton:pressed {
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QPushButton" name="redOnButton">
+          <item row="1" column="0">
+           <widget class="QLabel" name="redled_2">
+            <property name="minimumSize">
+             <size>
+              <width>518</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="text">
-             <string>ON</string>
+             <string>start draining battery</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="startDrainButton">
+            <property name="text">
+             <string>start draining</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="stopDrainButton">
+            <property name="text">
+             <string>stop draining</string>
             </property>
            </widget>
           </item>
