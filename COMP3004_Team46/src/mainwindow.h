@@ -17,17 +17,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 enum class DeviceState {
-    Initialization,
-    Menu,
-    SessionPreparation,
-    SessionActive,
-    ContactLoss,
-    DeliverTreatment,
-    SessionPaused,
-    SessionCompletion,
-    SessionLogViewing,
-    TimeDateSetting,
-    Shutdown
+    Initialization,//unknown?
+    Menu,//unknown?
+    SessionPreparation, //unknown?
+    SessionActive,      //blue light
+    ContactLoss,        // red flash
+    DeliverTreatment,   // green flash
+    SessionPaused, //unknown?
+    SessionCompletion,//unknown?
+    SessionLogViewing,//unknown?
+    TimeDateSetting,//unknown?
+    Shutdown            // no battery
 };
 
 public:
@@ -55,7 +55,7 @@ private slots:
     void flashRedLED();
     void flashGreenLED();
 
-    // temporary led buttons
+    // temporary buttons
     void blueOnClicked();
     void redOnClicked();
     void greenOnClicked();
@@ -65,11 +65,18 @@ private slots:
 
     void contactInitButtonClicked();
     void contactLostButtonClicked();
-    void applyTreatmentButtonClicked();
+    void deliverTreatmentButtonClicked();
+
+    void shutdownButtonClicked();
 
 
 private:
     Ui::MainWindow *ui;
+
+    DeviceState currentState;
+    void updateDeviceState(DeviceState newState);
+
+
     // led
     QTimer flashRedTimer;
     QTimer flashGreenTimer;
@@ -77,7 +84,9 @@ private:
     bool greenLedState = false; // false means off, true means on
 
     void setLedState(QPushButton* led, const QString& state);
-    void flashLED(QPushButton* led, QTimer* timer, const QString& color);
+    void flashLED(QPushButton* led, QTimer* timer);
+    void stopRedFlashing();
+    void stopGreenFlashing();
     // battery
     Battery battery;
     QTimer batteryDrainTimer;
