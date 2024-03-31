@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->blueOnButton, &QPushButton::clicked, this, &MainWindow::blueOnClicked);
     connect(ui->redOnButton, &QPushButton::clicked, this, &MainWindow::redOnClicked);
     connect(ui->greenOnButton, &QPushButton::clicked, this, &MainWindow::greenOnClicked);
+
     connect(ui->blueOffButton, &QPushButton::clicked, this, &MainWindow::blueOffClicked);
     connect(ui->redOffButton, &QPushButton::clicked, this, &MainWindow::redOffClicked);
     connect(ui->greenOffButton, &QPushButton::clicked, this, &MainWindow::greenOffClicked);
@@ -37,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     updateBatteryLevel();
 
 
-    //DISABLE THE LED BUTTONS
+    //DISABLE THE LED BUTTONS so you can't press the lights
     ui->redLED->setDisabled(1);
     ui->blueLED->setDisabled(1);
     ui->greenLED->setDisabled(1);
@@ -151,6 +152,23 @@ MainWindow::MainWindow(QWidget *parent)
         if (batteryDrainTimer.isActive()) {
             battery.drainBattery(); // Decrease battery level
         }
-        ui->batteryLevelAdminSpinBox->setValue(battery.getBatteryLevel()); // Update display
+
+        double batteryLevel = battery.getBatteryLevel();
+        ui->batteryLevelAdminSpinBox->setValue(batteryLevel); // Update display
+        ui->batteryLevelBar->setValue(batteryLevel);
+
+        QString highBatteryHealth = "QProgressBar { selection-background-color: rgb(78, 154, 6); background-color: rgb(0, 0, 0); }";
+        QString mediumBatteryHealth = "QProgressBar { selection-background-color: rgb(196, 160, 0); background-color: rgb(0, 0, 0); }";
+        QString lowBatteryHealth = "QProgressBar { selection-background-color: rgb(164, 0, 0); background-color: rgb(0, 0, 0); }";
+
+        if (batteryLevel >= 50) {
+            ui->batteryLevelBar->setStyleSheet(highBatteryHealth);
+        }
+        else if (batteryLevel >= 20) {
+            ui->batteryLevelBar->setStyleSheet(mediumBatteryHealth);
+        }
+        else {
+            ui->batteryLevelBar->setStyleSheet(lowBatteryHealth);
+        }
     }
 
