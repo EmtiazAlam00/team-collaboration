@@ -4,7 +4,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-<<<<<<< HEAD
+
 #include <QMainWindow>
 #include <QSpinBox>
 #include <QListWidget>
@@ -15,11 +15,11 @@
 #include <QtGlobal>
 
 #include "menu.h"
-=======
+
 #include <QTimer>
 
 #include "battery.h"
->>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
+
 
 
 QT_BEGIN_NAMESPACE
@@ -53,7 +53,7 @@ private:
     Menu* masterMenu;
     Menu* mainMenuOG;
 
-    Ui::MainWindow *ui;
+    //Ui::MainWindow *ui;
     QListWidget *activeQListWidget;
 
 
@@ -67,17 +67,13 @@ private slots:
     void stopButtonClicked();
     void menuButtonClicked();
 
-<<<<<<< HEAD
-
-    void setLedState(QPushButton* led, const QString& state);
-=======
+    //void setLedState(QPushButton* led, const QString& state);
     // battery slots
     void startDrainBattery();
     void stopDrainBattery();
     void chargeBattery();
     void updateBatteryLevel(); // specifically updating battery ui displays
     void lowerBatteryLevel();  // drop battery level by 10 to have some testing functionality
->>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
 
     //  led slots
     void flashRedLED();
@@ -91,8 +87,7 @@ private slots:
     void redOffClicked();
     void greenOffClicked();
 
-<<<<<<< HEAD
-=======
+
     void contactInitButtonClicked();
     void contactLostButtonClicked();
     void deliverTreatmentButtonClicked();
@@ -122,6 +117,5 @@ private:
     QTimer batteryDrainTimer;
 
 
->>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
 };
 #endif // MAINWINDOW_H

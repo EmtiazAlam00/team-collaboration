@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-<<<<<<< HEAD
 
     // Create menu tree
     masterMenu = new Menu("MAIN MENU", {"NEW SESSION","SESSION LOG","TIME AND DATE"}, nullptr);
@@ -23,8 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->menuLabel->setText(masterMenu->getName());
 
 
-=======
->>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
     // Connect each button to its respective slot
     connect(ui->powerButton, &QPushButton::clicked, this, &MainWindow::powerButtonClicked);
     connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
