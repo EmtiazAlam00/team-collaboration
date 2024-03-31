@@ -630,7 +630,7 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="text">
-     <string>GREEN ON</string>
+     <string>FLASH GREEN</string>
     </property>
    </widget>
    <widget class="QPushButton" name="greenOffButton">
@@ -656,7 +656,7 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="text">
-     <string>RED ON</string>
+     <string>FLASH RED</string>
     </property>
    </widget>
    <widget class="QPushButton" name="redOffButton">
@@ -698,19 +698,6 @@ QPushButton:pressed {
      <string>State tests</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="contactInitButton">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>420</y>
-      <width>121</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Contact Initiated</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
@@ -722,19 +709,6 @@ QPushButton:pressed {
     </property>
     <property name="text">
      <string>blue light on</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="contactLostButton">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>450</y>
-      <width>121</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Contact Lost</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -750,45 +724,6 @@ QPushButton:pressed {
      <string>blue light on, red light flashing</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="redFlashButton">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>510</y>
-      <width>96</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>FLASH RED</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="greenFlashButton">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>510</y>
-      <width>96</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>FLASH GREEN</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="applyTreatmentButton">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>480</y>
-      <width>121</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Apply Treatment</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
@@ -802,19 +737,6 @@ QPushButton:pressed {
      <string>blue light on, green light flashing</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="applyTreatmentButton_2">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>510</y>
-      <width>121</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>set battery = 0</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
@@ -826,6 +748,58 @@ QPushButton:pressed {
     </property>
     <property name="text">
      <string>all lights off, setBatteryLevel = 0</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deliverTreatmentButton">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>480</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DeliverTreatment</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="shutdownButton">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>510</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ShutDown</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="contactLostButton">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>450</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ContactLost</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="contactInitButton">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>420</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SessionActive</string>
     </property>
    </widget>
   </widget>
