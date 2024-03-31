@@ -16,6 +16,20 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+enum class DeviceState {
+    Initialization,
+    Menu,
+    SessionPreparation,
+    SessionActive,
+    ContactLoss,
+    DeliverTreatment,
+    SessionPaused,
+    SessionCompletion,
+    SessionLogViewing,
+    TimeDateSetting,
+    Shutdown
+};
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -30,8 +44,6 @@ private slots:
     void stopButtonClicked();
     void menuButtonClicked();
 
-    void setLedState(QPushButton* led, const QString& state);
-
     // battery slots
     void startDrainBattery();
     void stopDrainBattery();
@@ -39,6 +51,9 @@ private slots:
     void updateBatteryLevel(); // specifically updating battery ui displays
     void lowerBatteryLevel();  // drop battery level by 10 to have some testing functionality
 
+    //  led slots
+    void flashRedLED();
+    void flashGreenLED();
 
     // temporary led buttons
     void blueOnClicked();
@@ -48,10 +63,21 @@ private slots:
     void redOffClicked();
     void greenOffClicked();
 
+    void contactInitButtonClicked();
+    void contactLostButtonClicked();
+    void applyTreatmentButtonClicked();
+
 
 private:
     Ui::MainWindow *ui;
+    // led
+    QTimer flashRedTimer;
+    QTimer flashGreenTimer;
+    bool redLedState = false; // false means off, true means on
+    bool greenLedState = false; // false means off, true means on
 
+    void setLedState(QPushButton* led, const QString& state);
+    void flashLED(QPushButton* led, QTimer* timer, const QString& color);
     // battery
     Battery battery;
     QTimer batteryDrainTimer;

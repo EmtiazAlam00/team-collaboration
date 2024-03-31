@@ -26,6 +26,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->redOffButton, &QPushButton::clicked, this, &MainWindow::redOffClicked);
     connect(ui->greenOffButton, &QPushButton::clicked, this, &MainWindow::greenOffClicked);
 
+    connect(ui->contactInitButton, &QPushButton::clicked, this, &MainWindow::contactInitButtonClicked);
+    connect(ui->contactLostButton, &QPushButton::clicked, this, &MainWindow::contactLostButtonClicked);
+    connect(ui->applyTreatmentButton, &QPushButton::clicked, this, &MainWindow::applyTreatmentButtonClicked);
+
+    connect(&flashRedTimer, &QTimer::timeout, this, &MainWindow::flashRedLED);
+    connect(&flashGreenTimer, &QTimer::timeout, this, &MainWindow::flashGreenLED);
+
     //battery
     connect(ui->startDrainButton, &QPushButton::clicked, this, &MainWindow::startDrainBattery);
     connect(ui->stopDrainButton, &QPushButton::clicked, this, &MainWindow::stopDrainBattery);
@@ -115,22 +122,77 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "Green LED off!";
     }
 
+    void MainWindow::contactInitButtonClicked() {
+        setLedState(ui->blueLED, "contact_initiated");
+        flashRedTimer.stop();
+        setLedState(ui->redLED, "off");
+        flashGreenTimer.stop();
+        setLedState(ui->greenLED, "off");
 
+    }
+
+    void MainWindow::contactLostButtonClicked() {
+        ui->blueLED->setStyleSheet("QPushButton { background-color: blue; border-radius: 20px; }");
+
+        // Start flashing the red LED to indicate contact loss
+        flashLED(ui->redLED, &flashRedTimer, "red");
+
+        // If the green LED was previously flashing or on, stop it and set it to its "off" state
+        if(flashGreenTimer.isActive()) {
+            flashGreenTimer.stop();
+            ui->greenLED->setStyleSheet("QPushButton { background-color: grey; border-radius: 20px; }");
+        }
+    }
+
+
+    void MainWindow::applyTreatmentButtonClicked() {
+        // Turn the blue LED on without affecting its flashing state.
+        ui->blueLED->setStyleSheet("QPushButton { background-color: blue; border-radius: 20px; }");
+
+        // Ensure only the green LED flashes.
+        // If the red LED was previously flashing, stop it and set it to its "off" state.
+        if(flashRedTimer.isActive()) {
+            flashRedTimer.stop();
+            ui->redLED->setStyleSheet("QPushButton { background-color: grey; border-radius: 20px; }");
+        }
+
+        // Start flashing the green LED.
+        flashLED(ui->greenLED, &flashGreenTimer, "green");
+    }
+
+
+    void MainWindow::flashLED(QPushButton* led, QTimer* timer, const QString& color) {
+        if (!timer->isActive()) {
+            // Start flashing
+            timer->start(500); // Adjust the interval as needed
+        } else {
+            // Already flashing, so stop
+            timer->stop();
+            led->setStyleSheet("QPushButton { background-color: grey; border-radius: 20px; }");
+        }
+    }
+
+    void MainWindow::flashRedLED() {
+        redLedState = !redLedState;
+        ui->redLED->setStyleSheet(redLedState ? "QPushButton { background-color: red; border-radius: 20px; }" : "QPushButton { background-color: grey; border-radius: 20px; }");
+    }
+
+    void MainWindow::flashGreenLED() {
+        greenLedState = !greenLedState;
+        ui->greenLED->setStyleSheet(greenLedState ? "QPushButton { background-color: green; border-radius: 20px; }" : "QPushButton { background-color: grey; border-radius: 20px; }");
+    }
 
     void MainWindow::setLedState(QPushButton* led, const QString& state) {
-        if ( state =="off"){
+        if (state == "off") {
             led->setStyleSheet("QPushButton { background-color: grey; border-radius: 20px; }");
             led->setVisible(true);
         } else if (state == "contact_initiated") {
             led->setStyleSheet("QPushButton { background-color: blue; border-radius: 20px; }");
             led->setVisible(true);
         } else if (state == "treatment") {
-            led->setStyleSheet("QPushButton { background-color: green; border-radius: 20px; }");
-            // needs to start flashing
-            led->setVisible(true);
+            flashLED(ui->greenLED, &flashGreenTimer, "green");
         } else if (state == "contact_lost") {
-            led->setStyleSheet("QPushButton { background-color: red; border-radius: 20px; }");
-            led->setVisible(true);
+            flashLED(ui->redLED, &flashRedTimer, "red");
         } else {
             led->setVisible(false); // Hide the LED if the state doesn't match any condition
         }
