@@ -15,10 +15,12 @@ resources_dir = res
 SOURCES += \
     $${source_dir}/main.cpp \
     $${source_dir}/mainwindow.cpp \
+    src/battery.cpp \
     src/menu.cpp
 
 HEADERS += \
     $${source_dir}/mainwindow.h \
+    src/battery.h \
     src/menu.h
 
 FORMS += \

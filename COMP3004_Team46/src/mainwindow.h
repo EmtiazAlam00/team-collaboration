@@ -4,6 +4,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+<<<<<<< HEAD
 #include <QMainWindow>
 #include <QSpinBox>
 #include <QListWidget>
@@ -14,6 +15,11 @@
 #include <QtGlobal>
 
 #include "menu.h"
+=======
+#include <QTimer>
+
+#include "battery.h"
+>>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
 
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +29,20 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+enum class DeviceState {
+    Initialization,//unknown?
+    Menu,//unknown?
+    SessionPreparation, //unknown?
+    SessionActive,      //blue light
+    ContactLoss,        // red flash
+    DeliverTreatment,   // green flash
+    SessionPaused, //unknown?
+    SessionCompletion,//unknown?
+    SessionLogViewing,//unknown?
+    TimeDateSetting,//unknown?
+    Shutdown            // no battery
+};
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -47,10 +67,23 @@ private slots:
     void stopButtonClicked();
     void menuButtonClicked();
 
+<<<<<<< HEAD
 
     void setLedState(QPushButton* led, const QString& state);
+=======
+    // battery slots
+    void startDrainBattery();
+    void stopDrainBattery();
+    void chargeBattery();
+    void updateBatteryLevel(); // specifically updating battery ui displays
+    void lowerBatteryLevel();  // drop battery level by 10 to have some testing functionality
+>>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
 
-    // temporary led buttons
+    //  led slots
+    void flashRedLED();
+    void flashGreenLED();
+
+    // temporary buttons
     void blueOnClicked();
     void redOnClicked();
     void greenOnClicked();
@@ -58,5 +91,37 @@ private slots:
     void redOffClicked();
     void greenOffClicked();
 
+<<<<<<< HEAD
+=======
+    void contactInitButtonClicked();
+    void contactLostButtonClicked();
+    void deliverTreatmentButtonClicked();
+
+    void shutdownButtonClicked();
+
+
+private:
+    Ui::MainWindow *ui;
+
+    DeviceState currentState;
+    void updateDeviceState(DeviceState newState);
+
+
+    // led
+    QTimer flashRedTimer;
+    QTimer flashGreenTimer;
+    bool redLedState = false; // false means off, true means on
+    bool greenLedState = false; // false means off, true means on
+
+    void setLedState(QPushButton* led, const QString& state);
+    void flashLED(QPushButton* led, QTimer* timer);
+    void stopRedFlashing();
+    void stopGreenFlashing();
+    // battery
+    Battery battery;
+    QTimer batteryDrainTimer;
+
+
+>>>>>>> b650a1863e2aa0ee82b4ed9a0a48a3c82486082e
 };
 #endif // MAINWINDOW_H
