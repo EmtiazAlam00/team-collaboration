@@ -1,8 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
 #include <QMainWindow>
 #include <QPushButton>
+#include <QMainWindow>
+#include <QSpinBox>
+#include <QListWidget>
+#include <QGraphicsView>
+#include <QTime>
+#include <QStatusBar>
+#include <QVector>
+#include <QtGlobal>
+
+#include "menu.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -18,6 +29,15 @@ public:
     ~MainWindow();
 
 
+private:
+    Menu* masterMenu;
+    Menu* mainMenuOG;
+
+    Ui::MainWindow *ui;
+    QListWidget *activeQListWidget;
+
+
+
 private slots:
     void powerButtonClicked();
     void upButtonClicked();
@@ -26,6 +46,7 @@ private slots:
     void startButtonClicked();
     void stopButtonClicked();
     void menuButtonClicked();
+
 
     void setLedState(QPushButton* led, const QString& state);
 
@@ -37,8 +58,5 @@ private slots:
     void redOffClicked();
     void greenOffClicked();
 
-
-private:
-    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

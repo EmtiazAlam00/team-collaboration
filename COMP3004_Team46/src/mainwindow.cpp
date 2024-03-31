@@ -9,6 +9,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
+    // Create menu tree
+    masterMenu = new Menu("MAIN MENU", {"NEW SESSION","SESSION LOG","TIME AND DATE"}, nullptr);
+    mainMenuOG = masterMenu;
+    //initializeMainMenu(masterMenu);
+
+    // Initialize the main menu view
+    activeQListWidget = ui->mainMenuListView;
+    activeQListWidget->addItems(masterMenu->getMenuItems());
+    activeQListWidget->setCurrentRow(0);
+    ui->menuLabel->setText(masterMenu->getName());
+
 
     // Connect each button to its respective slot
     connect(ui->powerButton, &QPushButton::clicked, this, &MainWindow::powerButtonClicked);
@@ -54,10 +65,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     void MainWindow::upButtonClicked() {
         qDebug() << "Up button was clicked!";
+        int nextIndex = activeQListWidget->currentRow()-1;
+        if(nextIndex < 0){
+            nextIndex = activeQListWidget->count()-1;
+        }
+        activeQListWidget->setCurrentRow(nextIndex);
     }
 
     void MainWindow::downButtonClicked() {
         qDebug() << "Down button was clicked!";
+        int nextIndex = activeQListWidget->currentRow() + 1;
+
+        if (nextIndex > activeQListWidget->count() - 1) {
+            nextIndex = 0;
+        }
+
+        activeQListWidget->setCurrentRow(nextIndex);
     }
 
     void MainWindow::pauseButtonClicked() {
@@ -124,5 +147,6 @@ MainWindow::MainWindow(QWidget *parent)
             led->setVisible(false); // Hide the LED if the state doesn't match any condition
         }
     }
+
 
 
