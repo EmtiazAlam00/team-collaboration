@@ -36,7 +36,8 @@ private slots:
     void startDrainBattery();
     void stopDrainBattery();
     void chargeBattery();
-    void updateBatteryLevel();
+    void updateBatteryLevel(); // specifically updating battery ui displays
+    void lowerBatteryLevel();  // drop battery level by 10 to have some testing functionality
 
 
     // temporary led buttons

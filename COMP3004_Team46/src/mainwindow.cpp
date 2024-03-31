@@ -30,13 +30,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->startDrainButton, &QPushButton::clicked, this, &MainWindow::startDrainBattery);
     connect(ui->stopDrainButton, &QPushButton::clicked, this, &MainWindow::stopDrainBattery);
     connect(ui->chargeAdminButton, &QPushButton::clicked, this, &MainWindow::chargeBattery);
+    connect(ui->lowerBatteryButton, &QPushButton::clicked, this, &MainWindow::lowerBatteryLevel);
 
     // Setup and connect the battery drain timer
     connect(&batteryDrainTimer, &QTimer::timeout, this, &MainWindow::updateBatteryLevel);
 
     // Initialize displays
     updateBatteryLevel();
-
+    // disable spin box
+    ui->batteryLevelAdminSpinBox->setDisabled(1);
 
     //DISABLE THE LED BUTTONS so you can't press the lights
     ui->redLED->setDisabled(1);
@@ -148,6 +150,13 @@ MainWindow::MainWindow(QWidget *parent)
         updateBatteryLevel();
     }
 
+    void MainWindow::lowerBatteryLevel() {
+        double currentLevel = battery.getBatteryLevel();
+        double newLevel = std::max(0.0, currentLevel - 10.0); // Ensure battery level does not go below 0
+        battery.setBatteryLevel(newLevel);
+        updateBatteryLevel(); // Update the battery level display
+    }
+
     void MainWindow::updateBatteryLevel() {
         if (batteryDrainTimer.isActive()) {
             battery.drainBattery(); // Decrease battery level
@@ -157,9 +166,9 @@ MainWindow::MainWindow(QWidget *parent)
         ui->batteryLevelAdminSpinBox->setValue(batteryLevel); // Update display
         ui->batteryLevelBar->setValue(batteryLevel);
 
-        QString highBatteryHealth = "QProgressBar { selection-background-color: rgb(78, 154, 6); background-color: rgb(0, 0, 0); }";
-        QString mediumBatteryHealth = "QProgressBar { selection-background-color: rgb(196, 160, 0); background-color: rgb(0, 0, 0); }";
-        QString lowBatteryHealth = "QProgressBar { selection-background-color: rgb(164, 0, 0); background-color: rgb(0, 0, 0); }";
+        QString highBatteryHealth = "QProgressBar { selection-background-color: rgb(78, 154, 6); color: white; background-color: rgb(0, 0, 0); }";
+        QString mediumBatteryHealth = "QProgressBar { selection-background-color: rgb(196, 160, 0); color: white; background-color: rgb(0, 0, 0); }";
+        QString lowBatteryHealth = "QProgressBar { selection-background-color: rgb(164, 0, 0); color: white; background-color: rgb(0, 0, 0); }";
 
         if (batteryLevel >= 50) {
             ui->batteryLevelBar->setStyleSheet(highBatteryHealth);
