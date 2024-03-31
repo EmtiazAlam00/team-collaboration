@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -7,8 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
 
     // Connect each button to its respective slot
     connect(ui->powerButton, &QPushButton::clicked, this, &MainWindow::powerButtonClicked);
@@ -26,6 +25,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->redOffButton, &QPushButton::clicked, this, &MainWindow::redOffClicked);
     connect(ui->greenOffButton, &QPushButton::clicked, this, &MainWindow::greenOffClicked);
 
+    //battery
+    connect(ui->startDrainButton, &QPushButton::clicked, this, &MainWindow::startDrainBattery);
+    connect(ui->stopDrainButton, &QPushButton::clicked, this, &MainWindow::stopDrainBattery);
+    connect(ui->chargeAdminButton, &QPushButton::clicked, this, &MainWindow::chargeBattery);
+
+    // Setup and connect the battery drain timer
+    connect(&batteryDrainTimer, &QTimer::timeout, this, &MainWindow::updateBatteryLevel);
+
+    // Initialize displays
+    updateBatteryLevel();
+
 
     //DISABLE THE LED BUTTONS
     ui->redLED->setDisabled(1);
@@ -38,7 +48,6 @@ MainWindow::MainWindow(QWidget *parent)
     setLedState(ui->greenLED, "off");
 
 
-
     }
 
 
@@ -46,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
     {
         delete ui;
     }
-
 
     void MainWindow::powerButtonClicked() {
         qDebug() << "Power button was clicked!";
@@ -125,4 +133,24 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+
+    void MainWindow::startDrainBattery() {
+        batteryDrainTimer.start(1000); // Drain battery every second
+    }
+
+    void MainWindow::stopDrainBattery() {
+        batteryDrainTimer.stop();
+    }
+
+    void MainWindow::chargeBattery() {
+        battery.setBatteryLevel(100);
+        updateBatteryLevel();
+    }
+
+    void MainWindow::updateBatteryLevel() {
+        if (batteryDrainTimer.isActive()) {
+            battery.drainBattery(); // Decrease battery level
+        }
+        ui->batteryLevelAdminSpinBox->setValue(battery.getBatteryLevel()); // Update display
+    }
 

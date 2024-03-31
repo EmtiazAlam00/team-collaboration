@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QTimer>
+
+#include "battery.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -29,6 +32,13 @@ private slots:
 
     void setLedState(QPushButton* led, const QString& state);
 
+    // battery slots
+    void startDrainBattery();
+    void stopDrainBattery();
+    void chargeBattery();
+    void updateBatteryLevel();
+
+
     // temporary led buttons
     void blueOnClicked();
     void redOnClicked();
@@ -40,5 +50,11 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    // battery
+    Battery battery;
+    QTimer batteryDrainTimer;
+
+
 };
 #endif // MAINWINDOW_H
