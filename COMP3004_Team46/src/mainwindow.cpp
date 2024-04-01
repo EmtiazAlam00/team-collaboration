@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
+
     // Create menu tree
     masterMenu = new Menu("MAIN MENU", {"NEW SESSION","SESSION LOG","TIME AND DATE"}, nullptr);
     mainMenuOG = masterMenu;
