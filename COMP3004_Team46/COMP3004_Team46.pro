@@ -18,13 +18,17 @@ SOURCES += \
     $${source_dir}/mainwindow.cpp \
     src/battery.cpp \
     src/dbmanager.cpp \
-    src/menu.cpp
+    src/log.cpp \
+    src/menu.cpp \
+    src/session.cpp
 
 HEADERS += \
     $${source_dir}/mainwindow.h \
     src/battery.h \
     src/dbmanager.h \
-    src/menu.h
+    src/log.h \
+    src/menu.h \
+    src/session.h
 
 FORMS += \
     $${forms_dir}/mainwindow.ui
