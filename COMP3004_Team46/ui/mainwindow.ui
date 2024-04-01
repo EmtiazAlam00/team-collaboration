@@ -319,8 +319,8 @@ QPushButton:pressed {
     <widget class="QLabel" name="menuLabel">
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>-10</y>
+       <x>170</x>
+       <y>30</y>
        <width>81</width>
        <height>41</height>
       </rect>

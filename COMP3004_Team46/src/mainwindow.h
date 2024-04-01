@@ -56,6 +56,8 @@ private:
     //Ui::MainWindow *ui;
     QListWidget *activeQListWidget;
 
+    void updateMenu(const QString, const QStringList);
+
 
 
 private slots:
@@ -66,6 +68,7 @@ private slots:
     void startButtonClicked();
     void stopButtonClicked();
     void menuButtonClicked();
+    void selectClicked();
 
     //void setLedState(QPushButton* led, const QString& state);
     // battery slots

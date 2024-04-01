@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonClicked);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonClicked);
     connect(ui->menuButton, &QPushButton::clicked, this, &MainWindow::menuButtonClicked);
+    connect(ui->select, &QPushButton::clicked, this, &MainWindow::selectClicked);
 
     connect(&flashRedTimer, &QTimer::timeout, this, &MainWindow::flashRedLED);
     connect(&flashGreenTimer, &QTimer::timeout, this, &MainWindow::flashGreenLED);
@@ -227,8 +228,17 @@ MainWindow::MainWindow(QWidget *parent)
         updateDeviceState(DeviceState::DeliverTreatment);
     }
 
+    void MainWindow::selectClicked(){
+        qDebug() << "Select clicked";
+    }
 
+    void MainWindow::updateMenu(const QString selectMenuItem, const QStringList menuItems){
+        activeQListWidget->clear();
+        activeQListWidget->addItems(menuItems);
+        activeQListWidget->setCurrentRow(0);
 
+        ui->menuLabel->setText(selectMenuItem);
+    }
 
     void MainWindow::flashLED(QPushButton* led, QTimer* timer) {
         if (!timer->isActive()) {
