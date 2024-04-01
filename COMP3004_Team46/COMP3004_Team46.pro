@@ -17,11 +17,13 @@ SOURCES += \
     $${source_dir}/main.cpp \
     $${source_dir}/mainwindow.cpp \
     src/battery.cpp \
+    src/dbmanager.cpp \
     src/menu.cpp
 
 HEADERS += \
     $${source_dir}/mainwindow.h \
     src/battery.h \
+    src/dbmanager.h \
     src/menu.h
 
 FORMS += \
