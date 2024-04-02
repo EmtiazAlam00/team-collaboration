@@ -35,6 +35,7 @@ enum class DeviceState {
     Menu,//unknown?
     SessionPreparation, //unknown?
     SessionActive,      //blue light
+    AppliedToScalp,      // if admin is selected true
     ContactLoss,        // red flash
     DeliverTreatment,   // green flash
     SessionPaused, //unknown?
@@ -61,6 +62,7 @@ private:
 
 
 private slots:
+    // ui buttons
     void powerButtonClicked();
     void upButtonClicked();
     void downButtonClicked();
@@ -69,8 +71,8 @@ private slots:
     void stopButtonClicked();
     void menuButtonClicked();
     void selectClicked();
+    void applyToScalpChanged(int index);
 
-    //void setLedState(QPushButton* led, const QString& state);
     // battery slots
     void startDrainBattery();
     void stopDrainBattery();
@@ -96,7 +98,6 @@ private slots:
     void deliverTreatmentButtonClicked();
 
     void shutdownButtonClicked();
-
 
 private:
     Ui::MainWindow *ui;

@@ -37,6 +37,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&flashRedTimer, &QTimer::timeout, this, &MainWindow::flashRedLED);
     connect(&flashGreenTimer, &QTimer::timeout, this, &MainWindow::flashGreenLED);
 
+    // true false for applied to scalp, Apply to skin QComboBox connections
+    connect(ui->applyToScalpAdminBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::applyToScalpChanged);
+
     //battery
     connect(ui->startDrainButton, &QPushButton::clicked, this, &MainWindow::startDrainBattery);
     connect(ui->stopDrainButton, &QPushButton::clicked, this, &MainWindow::stopDrainBattery);
@@ -45,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setup and connect the battery drain timer
     connect(&batteryDrainTimer, &QTimer::timeout, this, &MainWindow::updateBatteryLevel);
+
 
     // Initialize displays
     updateBatteryLevel();
@@ -95,6 +99,9 @@ MainWindow::MainWindow(QWidget *parent)
                 flashGreenTimer.stop();
                 setLedState(ui->greenLED, "off");
                 break;
+            case DeviceState::AppliedToScalp:
+                qDebug() << "AppliedToScalp is true!";
+
             case DeviceState::ContactLoss:
                 ui->blueLED->setStyleSheet("QPushButton { background-color: blue; border-radius: 20px; }");
 
@@ -233,6 +240,20 @@ MainWindow::MainWindow(QWidget *parent)
     void MainWindow::selectClicked(){
         qDebug() << "Select clicked";
     }
+
+
+    void MainWindow::applyToScalpChanged(int index) {
+        // Assuming 'true' is represented by the first item
+        bool appliedToScalp = (index == 1); //  0 is false, 1 is true based on spin box
+
+        if(appliedToScalp) {
+            qDebug() << "Apply to Scalp is selected";
+            updateDeviceState(DeviceState::AppliedToScalp);
+        } else {
+            qDebug() << "Apply to Scalp is not selected";
+        }
+    }
+
 
     void MainWindow::updateMenu(const QString selectMenuItem, const QStringList menuItems){
         activeQListWidget->clear();
