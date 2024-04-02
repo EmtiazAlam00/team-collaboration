@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>buttons/powerButton.svg</file>
 	<file>buttons/chargeButton.svg</file>
+    <file>buttons/pauseButton.svg</file>
+    <file>buttons/startButton.svg</file>
+    <file>buttons/stopButton.svg</file>
     </qresource>
 </RCC>

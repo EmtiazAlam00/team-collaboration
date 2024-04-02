@@ -169,31 +169,118 @@ QPushButton:pressed {
     <widget class="QWidget" name="horizontalLayoutWidget_2">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>90</x>
        <y>220</y>
-       <width>330</width>
+       <width>211</width>
        <height>80</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="Controls">
       <item>
        <widget class="QPushButton" name="pauseButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+image: url(:/buttons/pauseButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+        </property>
         <property name="text">
-         <string>PAUSE</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="startButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+image: url(:/buttons/startButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+        </property>
         <property name="text">
-         <string>START</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="stopButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+image: url(:/buttons/stopButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+        </property>
         <property name="text">
-         <string>STOP</string>
+         <string/>
         </property>
        </widget>
       </item>
