@@ -5,5 +5,9 @@
     <file>buttons/pauseButton.svg</file>
     <file>buttons/startButton.svg</file>
     <file>buttons/stopButton.svg</file>
+    <file>buttons/menuButton.svg</file>
+    <file>buttons/upButton.svg</file>
+    <file>buttons/downButton.svg</file>
+    <file>buttons/selectButton.svg</file>
     </qresource>
 </RCC>

@@ -129,41 +129,128 @@ QPushButton:pressed {
       <rect>
        <x>10</x>
        <y>140</y>
-       <width>51</width>
-       <height>25</height>
+       <width>40</width>
+       <height>40</height>
       </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+image: url(:/buttons/menuButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+     </property>
      <property name="text">
-      <string>MENU</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="upButton">
      <property name="geometry">
       <rect>
        <x>330</x>
-       <y>120</y>
-       <width>51</width>
-       <height>25</height>
+       <y>80</y>
+       <width>40</width>
+       <height>40</height>
       </rect>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+image: url(:/buttons/upButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+     </property>
      <property name="text">
-      <string>UP</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="downButton">
      <property name="geometry">
       <rect>
        <x>330</x>
-       <y>150</y>
-       <width>51</width>
-       <height>25</height>
+       <y>130</y>
+       <width>40</width>
+       <height>40</height>
       </rect>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+image: url(:/buttons/downButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+     </property>
      <property name="text">
-      <string>DOWN</string>
+      <string/>
      </property>
     </widget>
     <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -421,12 +508,41 @@ QPushButton:pressed {
       <rect>
        <x>330</x>
        <y>180</y>
-       <width>61</width>
-       <height>25</height>
+       <width>40</width>
+       <height>40</height>
       </rect>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+image: url(:/buttons/selectButton.svg);
+background-color: rgb(53, 80, 112);
+border-radius: 20px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+     </property>
      <property name="text">
-      <string>SELECT</string>
+      <string/>
      </property>
     </widget>
     <widget class="QListWidget" name="mainMenuListView">
