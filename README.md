@@ -2,7 +2,7 @@
 ### Group Members:
 
 - Danielle Nkem 101218592
-- Charles Yan
+- Charles Yan 101193325
 - Kaitlyn Warhurst 101217643
 - Emtiaz Alam, 101114889
 - Jearina Tseung 101199241
