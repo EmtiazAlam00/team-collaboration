@@ -17,8 +17,6 @@ class Session: public QObject{
         int getLength();
         QDateTime getStartTime();
 
-
-
     private:
         int id;
         int length;
