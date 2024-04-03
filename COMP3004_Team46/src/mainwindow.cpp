@@ -9,9 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
-
     // Create menu tree
     masterMenu = new Menu("MAIN MENU", {"NEW SESSION","SESSION LOG","TIME AND DATE"}, nullptr);
     mainMenuOG = masterMenu;
@@ -23,6 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
     activeQListWidget->setCurrentRow(0);
     ui->menuLabel->setText(masterMenu->getName());
 
+    // Initialize new session view
+    // connect
+    connect(ui->mainMenuListView, &QListWidget::itemClicked, this, &MainWindow::handleMenuItemSelected);
+
+
+
 
     // Connect each button to its respective slot
     connect(ui->powerButton, &QPushButton::clicked, this, &MainWindow::powerButtonClicked);
@@ -32,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonClicked);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonClicked);
     connect(ui->menuButton, &QPushButton::clicked, this, &MainWindow::menuButtonClicked);
-    connect(ui->select, &QPushButton::clicked, this, &MainWindow::selectClicked);
+    connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
 
     connect(&flashRedTimer, &QTimer::timeout, this, &MainWindow::flashRedLED);
     connect(&flashGreenTimer, &QTimer::timeout, this, &MainWindow::flashGreenLED);
@@ -50,10 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&batteryDrainTimer, &QTimer::timeout, this, &MainWindow::updateBatteryLevel);
 
 
-    // Initialize displays
-    updateBatteryLevel();
-    // disable spin box
-    ui->batteryLevelAdminSpinBox->setDisabled(1);
+
 
     //DISABLE THE LED BUTTONS so you can't press the lights
     ui->redLED->setDisabled(1);
@@ -64,6 +64,15 @@ MainWindow::MainWindow(QWidget *parent)
     setLedState(ui->redLED, "off");
     setLedState(ui->blueLED, "off");
     setLedState(ui->greenLED, "off");
+
+
+    // Initialize displays
+    updateBatteryLevel();
+    // disable spin box
+    ui->batteryLevelAdminSpinBox->setDisabled(1);
+    // set device state to inMenu
+    updateDeviceState(DeviceState::Off);
+
 
     // temp buttons
     connect(ui->blueOnButton, &QPushButton::clicked, this, &MainWindow::blueOnClicked);
@@ -77,7 +86,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->contactInitButton, &QPushButton::clicked, this, &MainWindow::contactInitButtonClicked);
     connect(ui->contactLostButton, &QPushButton::clicked, this, &MainWindow::contactLostButtonClicked);
     connect(ui->deliverTreatmentButton, &QPushButton::clicked, this, &MainWindow::deliverTreatmentButtonClicked);
-
     connect(ui->shutdownButton, &QPushButton::clicked, this, &MainWindow::shutdownButtonClicked);
 
     }
@@ -88,28 +96,109 @@ MainWindow::MainWindow(QWidget *parent)
         delete ui;
     }
 
+
+    void MainWindow::handleMenuItemSelected() {
+        QListWidgetItem *selectedItem = ui->mainMenuListView->currentItem();
+        if (!selectedItem) {
+            qDebug() << "No item selected";
+            return;
+        }
+
+        QString selectedItemText = selectedItem->text();
+        if (selectedItemText == "NEW SESSION") {
+            qDebug() << "Selected New Session";
+            showNewSessionView();
+        } else if (selectedItemText == "SESSION LOG") {
+            qDebug() << "Selected Session Log";
+        } else if (selectedItemText == "TIME AND DATE") {
+            qDebug() << "Selected Time and Date";
+        }
+        // Add else-if blocks for other menu items as needed
+    }
+
+    void MainWindow::showNewSessionView(){
+        qDebug() << "showNewSessionView()";
+        activeQListWidget->clear(); // Clear current items
+        activeQListWidget->addItem("Placeholder 1");
+        activeQListWidget->addItem("Placeholder 2");
+    }
+
+    MainWindow::DeviceState MainWindow::getDeviceState() const {
+        return currentState; // Return the current device state
+    }
     void MainWindow::updateDeviceState(DeviceState newState) {
         currentState = newState;
 
         switch(currentState) {
+            case DeviceState::Off:
+                qDebug()<< "DeviceState::Off - Not Draining - Device Off";
+                isDeviceOn = false;
+                ui->offFrame->setVisible(true);
+
+                MainWindow::stopDrainBattery();
+
+                // Turn off all LED lights
+                stopRedFlashing();
+                stopGreenFlashing();
+                setLedState(ui->blueLED, "off");
+
+                break;
+
+            case DeviceState::On:
+                qDebug() << "DeviceState::Off - Device On";
+                isDeviceOn = true;
+
+                ui->offFrame->setVisible(false);
+                updateDeviceState(DeviceState::InMainMenu);
+                break;
+
+            case DeviceState::InMainMenu:
+                qDebug() << "DeviceState::InMainMenu - Using idle drain rate";
+                battery.setDrainRateIdle();
+                MainWindow::startDrainBattery();
+
+                break;
             case DeviceState::SessionActive:
+                qDebug() << "Session Active - Using active drain rate.";
+                battery.setDrainRateActive(); // Use active drain rate
+                MainWindow::startDrainBattery();
+
                 setLedState(ui->blueLED, "contact_initiated");
                 flashRedTimer.stop();
                 setLedState(ui->redLED, "off");
                 flashGreenTimer.stop();
                 setLedState(ui->greenLED, "off");
                 break;
-            case DeviceState::AppliedToScalp:
-                qDebug() << "AppliedToScalp is true!";
 
-            case DeviceState::ContactLoss:
+            case DeviceState::InSessionLogMenu:
+                qDebug() << "DeviceState::InSessionLogMenu - Using idle drain rate";
+                battery.setDrainRateIdle();
+                MainWindow::startDrainBattery();
+
+                break;
+            case DeviceState::InTimeDateMenu:
+                qDebug() << "DeviceState::InTimeDateMenu - Using idle drain rate";
+                battery.setDrainRateIdle();
+                MainWindow::startDrainBattery();
+
+                break;
+            case DeviceState::ContactLost:
+                qDebug() << "DeviceState::ContactLost - Using idle drain rate";
+                battery.setDrainRateIdle();
+                MainWindow::startDrainBattery();
+
                 ui->blueLED->setStyleSheet("QPushButton { background-color: blue; border-radius: 20px; }");
 
                 // Start flashing the red LED to indicate contact loss
                 flashLED(ui->redLED, &flashRedTimer);
                 stopGreenFlashing();
                 break;
+
             case DeviceState::DeliverTreatment:
+                qDebug() << "DeviceState::DeliverTreatment - Using active drain rate";
+                battery.setDrainRateActive();
+                MainWindow::startDrainBattery();
+
                 // Turn the blue LED on without affecting its flashing state.
                 ui->blueLED->setStyleSheet("QPushButton { background-color: blue; border-radius: 20px; }");
 
@@ -119,16 +208,6 @@ MainWindow::MainWindow(QWidget *parent)
                 // Start flashing the green LED.
                 flashLED(ui->greenLED, &flashGreenTimer);
                 break;
-            case DeviceState::Shutdown:
-
-                // Set battery level to 0 and update display
-                battery.setBatteryLevel(0);
-                updateBatteryLevel();
-
-                // Turn off all LED lights
-                stopRedFlashing();
-                stopGreenFlashing();
-                setLedState(ui->blueLED, "off");
 
             default:
                 // other states
@@ -157,7 +236,18 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     void MainWindow::powerButtonClicked() {
-        qDebug() << "Power button was clicked!";
+        double batteryLevel = battery.getBatteryLevel();
+        if (batteryLevel == 0){
+            qDebug() << "Not enough battery. Please charge and try again!";
+
+        } else {
+            // Toggle the state of the device
+            isDeviceOn = !isDeviceOn;
+            qDebug() << "Power button was clicked! Device is now" << (isDeviceOn ? "ON" : "OFF");
+            // Call updateDeviceState to switch between On and Off states
+            updateDeviceState(isDeviceOn ? DeviceState::On : DeviceState::Off);
+        }
+
     }
 
     void MainWindow::upButtonClicked() {
@@ -230,27 +320,33 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     void MainWindow::contactLostButtonClicked() {
-        updateDeviceState(DeviceState::ContactLoss);
+        updateDeviceState(DeviceState::ContactLost);
     }
 
     void MainWindow::deliverTreatmentButtonClicked() {
         updateDeviceState(DeviceState::DeliverTreatment);
     }
 
-    void MainWindow::selectClicked(){
-        qDebug() << "Select clicked";
+    void MainWindow::selectButtonClicked() {
+        if (currentState == DeviceState::InMainMenu){
+            handleMenuItemSelected();
+        }else{
+            qDebug() << "Select action not defined for current state";
+        }
     }
 
 
     void MainWindow::applyToScalpChanged(int index) {
-        // Assuming 'true' is represented by the first item
-        bool appliedToScalp = (index == 1); //  0 is false, 1 is true based on spin box
+        bool isAppliedToScalp = (index == 1); // 0 = false, 1 = true
 
-        if(appliedToScalp) {
-            qDebug() << "Apply to Scalp is selected";
-            updateDeviceState(DeviceState::AppliedToScalp);
+        // Update the appliedToScalp member variable accordingly
+        appliedToScalp = isAppliedToScalp;
+        qDebug() << "Apply to Scalp is" << (isAppliedToScalp ? "true" : "false");
+
+        if (isAppliedToScalp) {
+            updateDeviceState(DeviceState::SessionActive);
         } else {
-            qDebug() << "Apply to Scalp is not selected";
+            updateDeviceState(DeviceState::ContactLost);
         }
     }
 
@@ -302,14 +398,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     void MainWindow::startDrainBattery() {
         batteryDrainTimer.start(1000); // Drain battery every second
+        double batteryLevel = battery.getBatteryLevel();
+        qDebug() << "Battery draining - Battery at" << batteryLevel << "%";
+
     }
 
     void MainWindow::stopDrainBattery() {
         batteryDrainTimer.stop();
+        double batteryLevel = battery.getBatteryLevel();
+        qDebug() << "Battery not draining - Battery at" << batteryLevel << "%";
     }
 
     void MainWindow::chargeBattery() {
         battery.setBatteryLevel(100);
+        qDebug() << "Battery charged! - Battery at 100%";
         updateBatteryLevel();
     }
 
@@ -327,21 +429,36 @@ MainWindow::MainWindow(QWidget *parent)
 
         double batteryLevel = battery.getBatteryLevel();
         ui->batteryLevelAdminSpinBox->setValue(batteryLevel); // Update display
-        ui->batteryLevelBar->setValue(batteryLevel);
+        ui->batteryLevelBar->setValue(static_cast<int>(batteryLevel));
 
+        // Check battery level and update batteryAlert QLabel accordingly
+        if (batteryLevel <= 20) {
+            ui->batteryAlert->setText("Battery low: Please charge soon.");
+            ui->batteryAlert->setStyleSheet("QLabel { background-color: rgb(192, 191, 188); color : red; }");
+        } else {
+            ui->batteryAlert->setText("Battery level sufficient.");
+            ui->batteryAlert->setStyleSheet("QLabel { background-color: rgb(192, 191, 188); color : green; }");
+        }
+
+        // Update battery level bar color
         QString highBatteryHealth = "QProgressBar { selection-background-color: rgb(78, 154, 6); color: white; background-color: rgb(0, 0, 0); }";
         QString mediumBatteryHealth = "QProgressBar { selection-background-color: rgb(196, 160, 0); color: white; background-color: rgb(0, 0, 0); }";
         QString lowBatteryHealth = "QProgressBar { selection-background-color: rgb(164, 0, 0); color: white; background-color: rgb(0, 0, 0); }";
 
         if (batteryLevel >= 50) {
             ui->batteryLevelBar->setStyleSheet(highBatteryHealth);
-        }
-        else if (batteryLevel >= 20) {
+        } else if (batteryLevel >= 20 && batteryLevel < 50) {
             ui->batteryLevelBar->setStyleSheet(mediumBatteryHealth);
-        }
-        else {
+        } else {
             ui->batteryLevelBar->setStyleSheet(lowBatteryHealth);
         }
+
+        // If battery level is below 0, shut down the device
+        if (batteryLevel <= 0) {
+            qDebug() << "Battery depleted - Turning Off.";
+            updateDeviceState(DeviceState::Off);
+        }
     }
+
 
 

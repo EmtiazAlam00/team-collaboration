@@ -1,7 +1,8 @@
 #include "battery.h"
 #include <algorithm>
 
-Battery::Battery() : batteryLevel(100.0) {
+Battery::Battery() : batteryLevel(100.0), drainRate(DRAIN_RATE_IDLE) {
+    // device starts in idle state
 }
 
 void Battery::rechargeBattery() {
@@ -13,9 +14,19 @@ void Battery::setBatteryLevel(double newLevel) {
 }
 
 void Battery::drainBattery() {
-    setBatteryLevel(batteryLevel - DRAIN_RATE);
+    setBatteryLevel(batteryLevel - drainRate);
 }
 
 double Battery::getBatteryLevel() const {
     return batteryLevel;
 }
+
+void Battery::setDrainRateIdle() {
+    drainRate = DRAIN_RATE_IDLE;
+}
+
+void Battery::setDrainRateActive() {
+    drainRate = DRAIN_RATE_ACTIVE;
+}
+
+

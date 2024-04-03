@@ -31,24 +31,25 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 enum class DeviceState {
-    Initialization,//unknown?
-    Menu,//unknown?
-    SessionPreparation, //unknown?
-    SessionActive,      //blue light
-    AppliedToScalp,      // if admin is selected true
-    ContactLoss,        // red flash
+    Off,
+    On,
+    InMainMenu, // initial state
+    SessionActive,      //menu 1, blue light, New Session
+    InSessionLogMenu, // menu 2
+    InTimeDateMenu,     // menu 3
+    ContactLost,        // red flash
     DeliverTreatment,   // green flash
     SessionPaused, //unknown?
     SessionCompletion,//unknown?
     SessionLogViewing,//unknown?
-    TimeDateSetting,//unknown?
-    Shutdown            // no battery
+    Shutdown            // no battery (different from off)
 };
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    DeviceState getDeviceState() const;
+//    DeviceState currentState;
 
 private:
     Menu* masterMenu;
@@ -58,10 +59,13 @@ private:
     QListWidget *activeQListWidget;
 
     void updateMenu(const QString, const QStringList);
-
+    bool appliedToScalp;
 
 
 private slots:
+
+    void handleMenuItemSelected();
+
     // ui buttons
     void powerButtonClicked();
     void upButtonClicked();
@@ -70,7 +74,7 @@ private slots:
     void startButtonClicked();
     void stopButtonClicked();
     void menuButtonClicked();
-    void selectClicked();
+    void selectButtonClicked();
     void applyToScalpChanged(int index);
 
     // battery slots
@@ -102,9 +106,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    void showNewSessionView(); // Function to switch view to "New Session"
+
+    // Device state management
     DeviceState currentState;
     void updateDeviceState(DeviceState newState);
-
+    bool isDeviceOn; // on/off flag
 
     // led
     QTimer flashRedTimer;
@@ -116,6 +123,7 @@ private:
     void flashLED(QPushButton* led, QTimer* timer);
     void stopRedFlashing();
     void stopGreenFlashing();
+
     // battery
     Battery battery;
     QTimer batteryDrainTimer;
