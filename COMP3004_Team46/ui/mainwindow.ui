@@ -1058,6 +1058,19 @@ QPushButton:pressed {
      </property>
     </widget>
    </widget>
+   <widget class="QDateTimeEdit" name="dateTimeEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>410</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

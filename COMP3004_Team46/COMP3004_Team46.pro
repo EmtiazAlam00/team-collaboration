@@ -17,6 +17,7 @@ SOURCES += \
     $${source_dir}/main.cpp \
     $${source_dir}/mainwindow.cpp \
     src/battery.cpp \
+    src/chrono.cpp \
     src/dbmanager.cpp \
     src/log.cpp \
     src/menu.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     $${source_dir}/mainwindow.h \
     src/battery.h \
+    src/chrono.h \
     src/dbmanager.h \
     src/log.h \
     src/menu.h \

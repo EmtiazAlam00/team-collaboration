@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     activeQListWidget->addItems(masterMenu->getMenuItems());
     activeQListWidget->setCurrentRow(0);
     ui->menuLabel->setText(masterMenu->getName());
+    ui->dateTimeEdit->setVisible(false);
 
     // Initialize new session view
     // connect
@@ -111,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
         } else if (selectedItemText == "SESSION LOG") {
             qDebug() << "Selected Session Log";
         } else if (selectedItemText == "TIME AND DATE") {
-            qDebug() << "Selected Time and Date";
+            setTimeDate();
         }
         // Add else-if blocks for other menu items as needed
     }
@@ -458,6 +459,11 @@ MainWindow::MainWindow(QWidget *parent)
             qDebug() << "Battery depleted - Turning Off.";
             updateDeviceState(DeviceState::Off);
         }
+    }
+
+    void MainWindow::setTimeDate(){
+        qDebug() << "Selected Time and Date";
+        ui->dateTimeEdit->setVisible(true);
     }
 
 

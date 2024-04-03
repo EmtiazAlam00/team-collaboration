@@ -128,6 +128,9 @@ private:
     Battery battery;
     QTimer batteryDrainTimer;
 
+    //chrono
+    void setTimeDate();
+
 
 };
 #endif // MAINWINDOW_H
