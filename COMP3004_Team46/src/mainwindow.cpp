@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
     activeQListWidget->addItems(masterMenu->getMenuItems());
     activeQListWidget->setCurrentRow(0);
     ui->menuLabel->setText(masterMenu->getName());
-    ui->dateTimeEdit->setVisible(false);
 
     // Initialize new session view
     // connect
@@ -112,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent)
         } else if (selectedItemText == "SESSION LOG") {
             qDebug() << "Selected Session Log";
         } else if (selectedItemText == "TIME AND DATE") {
-            setTimeDate();
+            setDateTime();
         }
         // Add else-if blocks for other menu items as needed
     }
@@ -285,6 +284,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     void MainWindow::menuButtonClicked() {
         qDebug() << "Menu button was clicked!";
+        ui->dateTimeEdit->setVisible(false);
     }
 
     void MainWindow::blueOnClicked() {
@@ -461,10 +461,24 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    void MainWindow::setTimeDate(){
+    void MainWindow::setDateTime(){
         qDebug() << "Selected Time and Date";
         ui->dateTimeEdit->setVisible(true);
+        setupDateTime();
     }
 
+
+    void MainWindow::selectDateTime(){
+        qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date();
+        ui->dateTimeEdit->setVisible(false);
+    }
+
+    void MainWindow::setupDateTime() {
+        disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
+        disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
+        disconnect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+        connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectDateTime);
+
+    }
 
 

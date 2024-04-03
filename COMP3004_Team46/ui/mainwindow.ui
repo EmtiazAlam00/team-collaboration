@@ -1070,6 +1070,9 @@ QPushButton:pressed {
       <height>31</height>
      </rect>
     </property>
+    <property name="visible">
+      <bool>false</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -7,7 +7,7 @@ class Chrono
 public:
     Chrono();
 
-   void  getTimeDate();
+   void  getChrono();
 };
 
 #endif // CHRONO_H

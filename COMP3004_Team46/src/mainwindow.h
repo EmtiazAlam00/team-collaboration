@@ -129,7 +129,11 @@ private:
     QTimer batteryDrainTimer;
 
     //chrono
-    void setTimeDate();
+    void setDateTime();
+    void selectDateTime();
+    void upDateTime();
+    void downDateTime();
+    void setupDateTime();
 
 
 };
