@@ -13,6 +13,7 @@
 #include <QStatusBar>
 #include <QVector>
 #include <QtGlobal>
+#include <QDateTime>
 
 #include "menu.h"
 

@@ -469,14 +469,32 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     void MainWindow::selectDateTime(){
-        qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date();
+        qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date() << ui->dateTimeEdit->dateTime().time();
         ui->dateTimeEdit->setVisible(false);
+        connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
+        connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
+        connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+    }
+
+    void MainWindow::upDateTime(){
+        qDebug() << "Date/time edit up clicked";
+        QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
+        QDateTime newDateTime = currentDateTime.addSecs(3600);
+        ui->dateTimeEdit->setDateTime(newDateTime);
+    }
+    void MainWindow::downDateTime(){
+        qDebug() << "Date/time edit down clicked";
+        QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
+        QDateTime newDateTime = currentDateTime.addSecs(-3600);
+        ui->dateTimeEdit->setDateTime(newDateTime);
     }
 
     void MainWindow::setupDateTime() {
         disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
         disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
         disconnect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+        connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+        connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
         connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectDateTime);
 
     }
