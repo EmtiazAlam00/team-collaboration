@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // create database connection
+    db = new DBManager();
+
     // Create menu tree
     masterMenu = new Menu("MAIN MENU", {"NEW SESSION","SESSION LOG","TIME AND DATE"}, nullptr);
     mainMenuOG = masterMenu;
@@ -110,8 +113,12 @@ MainWindow::MainWindow(QWidget *parent)
             showNewSessionView();
         } else if (selectedItemText == "SESSION LOG") {
             qDebug() << "Selected Session Log";
+            showSessionLogView();
         } else if (selectedItemText == "TIME AND DATE") {
             setDateTime();
+        } else if (selectedItemText == "DEVICE SESSION LOG HISTORY"){
+            qDebug() << "Selected device session log";
+            showDeviceSessionLogView();
         }
         // Add else-if blocks for other menu items as needed
     }
@@ -121,6 +128,39 @@ MainWindow::MainWindow(QWidget *parent)
         activeQListWidget->clear(); // Clear current items
         activeQListWidget->addItem("Placeholder 1");
         activeQListWidget->addItem("Placeholder 2");
+    }
+
+    void MainWindow::showSessionLogView(){
+        qDebug() << "showSessionLogView()";
+        activeQListWidget->clear(); // Clears items
+        activeQListWidget->addItem("DEVICE SESSION LOG HISTORY");
+        activeQListWidget->addItem("PC SESSION LOG HISTORY");
+    }
+
+    void MainWindow::showDeviceSessionLogView(){
+        qDebug() << "showDeviceSessionLogView()";
+        activeQListWidget->clear(); // Clears items
+
+        activeQListWidget->addItem("DEVICE SESSION LOG HISTORY");
+        for (int i=0; i<db->getSessionsHistoryDevice().size(); i++){
+            QStringList listInfo = db->getSessionsHistoryDevice().at(i);
+            QString sessionInfo = "Session ID: " + listInfo.at(0) + " Date Time: " + listInfo.at(1) + "Length: " + (2);
+            activeQListWidget->addItem(sessionInfo);
+        }
+
+    }
+
+    void MainWindow::showPCSessionLogView(){
+        qDebug() << "showDeviceSessionLogView()";
+        activeQListWidget->clear(); // Clears items
+
+        activeQListWidget->addItem("PC SESSION LOG HISTORY");
+        for (int i=0; i<db->getSessionsHistoryPC().size(); i++){
+            QStringList listInfo = db->getSessionsHistoryPC().at(i);    // need to add in baseline info still
+            QString sessionInfo = "ID: " + listInfo.at(0) + " Date Times: " + listInfo.at(1) + "Length: " + (2);
+            activeQListWidget->addItem(sessionInfo);
+        }
+
     }
 
     MainWindow::DeviceState MainWindow::getDeviceState() const {
