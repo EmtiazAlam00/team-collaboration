@@ -21,6 +21,7 @@
 
 #include "battery.h"
 
+#include "dbmanager.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +56,7 @@ public:
 private:
     Menu* masterMenu;
     Menu* mainMenuOG;
+    DBManager* db;
 
     //Ui::MainWindow *ui;
     QListWidget *activeQListWidget;
@@ -108,6 +110,9 @@ private:
     Ui::MainWindow *ui;
 
     void showNewSessionView(); // Function to switch view to "New Session"
+    void showSessionLogView();  // switches view to "Logged Sessions"
+    void showDeviceSessionLogView();
+    void showPCSessionLogView();
 
     // Device state management
     DeviceState currentState;
