@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     activeQListWidget = ui->mainMenuListView;
     ui->menuLabel->setText(masterMenu->getName());
 
+
+
+    // Initialize new session view
     // connect
     connect(ui->mainMenuListView, &QListWidget::itemClicked, this, &MainWindow::handleMenuItemSelected);
 
