@@ -97,7 +97,9 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     void MainWindow::showMainMenuView() {
-
+        if (count != 0) {
+            interruptDateTime();
+        }
         // Clear current items
         activeQListWidget->clear();
 
@@ -183,8 +185,10 @@ MainWindow::MainWindow(QWidget *parent)
             case DeviceState::Off:
                 qDebug()<< "DeviceState::Off - Not Draining - Device Off";
                 isDeviceOn = false;
+                if (count != 0) {
+                    interruptDateTime();
+                }
                 ui->offFrame->setVisible(true);
-
                 MainWindow::stopDrainBattery();
 
                 // Turn off all LED lights
@@ -517,22 +521,17 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "Selected Time and Date";
         ui->dateTimeEdit->setVisible(true);
         setupDateTime();
-        count = 0;
+        count = 1;
     }
 
     void MainWindow::selectDateTime(){
         qDebug() << count;
         count += 1;
 
-        if (count == 6) {
+        if (count == 7) {
             qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date() << ui->dateTimeEdit->dateTime().time();
-            ui->dateTimeEdit->setVisible(false);
-            disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
-            disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
-            disconnect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectDateTime);
-            connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
-            connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
-            connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+            // save date time here
+            interruptDateTime();
         }
     }
 
@@ -543,22 +542,22 @@ MainWindow::MainWindow(QWidget *parent)
         QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
         QDateTime newDateTime = currentDateTime;
         switch(count) {
-            case 0:
+            case 1:
                 newDateTime = newDateTime.addMonths(1);
                 break;
-            case 1:
+            case 2:
                 newDateTime = newDateTime.addDays(1);
                 break;
-            case 2:
+            case 3:
                 newDateTime = newDateTime.addYears(1);
                 break;
-            case 3:
+            case 4:
                 newDateTime = newDateTime.addSecs(3600);
                 break;
-            case 4:
+            case 5:
                 newDateTime = newDateTime.addSecs(60);
                 break;
-            case 5:
+            case 6:
                 newDateTime = newDateTime.addSecs(12 * 3600);
                 break;
         }
@@ -571,22 +570,22 @@ MainWindow::MainWindow(QWidget *parent)
         QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
         QDateTime newDateTime = currentDateTime;
         switch(count) {
-            case 0:
+            case 1:
                 newDateTime = newDateTime.addMonths(-1);
                 break;
-            case 1:
+            case 2:
                 newDateTime = newDateTime.addDays(-1);
                 break;
-            case 2:
+            case 3:
                 newDateTime = newDateTime.addYears(-1);
                 break;
-            case 3:
+            case 4:
                 newDateTime = newDateTime.addSecs(-3600);
                 break;
-            case 4:
+            case 5:
                 newDateTime = newDateTime.addSecs(-60);
                 break;
-            case 5:
+            case 6:
                 newDateTime = newDateTime.addSecs(-12 * 3600);
                 break;
         }
@@ -600,7 +599,17 @@ MainWindow::MainWindow(QWidget *parent)
         connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
         connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
         connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectDateTime);
-
     }
 
-
+    void MainWindow::interruptDateTime() {
+        ui->dateTimeEdit->setVisible(false);
+        QDateTime defaultDateTime(QDate(2000, 1, 1), QTime(0, 0));
+        ui->dateTimeEdit->setDateTime(defaultDateTime);
+        disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+        disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+        disconnect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectDateTime);
+        connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
+        connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
+        connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+        count = 0;
+    }
