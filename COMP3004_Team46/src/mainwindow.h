@@ -23,6 +23,10 @@
 
 #include "dbmanager.h"
 
+#include "log.h"
+
+#include "session.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -57,6 +61,9 @@ private:
     Menu* masterMenu;
     Menu* mainMenuOG;
     DBManager* db;
+    Session* currentSession; // changed
+    int currentTimerCount;
+    QVector<Log*> recordings;
 
     //Ui::MainWindow *ui;
     QListWidget *activeQListWidget;
@@ -114,6 +121,7 @@ private:
     void showSessionLogView();  // switches view to "Logged Sessions"
     void showDeviceSessionLogView();
     void showPCSessionLogView();
+    void beginSession(Session* s); //changed
 
     // Device state management
     DeviceState currentState;
