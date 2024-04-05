@@ -1,9 +1,11 @@
 QT       += core gui
 QT        += sql
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++11
+
+LIBS += -lfftw3
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -21,7 +23,9 @@ SOURCES += \
     src/dbmanager.cpp \
     src/log.cpp \
     src/menu.cpp \
-    src/session.cpp
+    src/session.cpp\
+    src/eegsite.cpp\
+    src/qcustomplot.cpp
 
 HEADERS += \
     $${source_dir}/mainwindow.h \
@@ -30,7 +34,9 @@ HEADERS += \
     src/dbmanager.h \
     src/log.h \
     src/menu.h \
-    src/session.h
+    src/session.h\
+    src/eegsite.cpp\
+    src/qcustomplot.cpp
 
 FORMS += \
     $${forms_dir}/mainwindow.ui
