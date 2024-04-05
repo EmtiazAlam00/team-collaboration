@@ -15,15 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Create menu tree
     masterMenu = new Menu("MAIN MENU", {"NEW SESSION","SESSION LOG","TIME AND DATE"}, nullptr);
     mainMenuOG = masterMenu;
-    //initializeMainMenu(masterMenu);
-
-    // Initialize the main menu view
     activeQListWidget = ui->mainMenuListView;
-    activeQListWidget->addItems(masterMenu->getMenuItems());
-    activeQListWidget->setCurrentRow(0);
     ui->menuLabel->setText(masterMenu->getName());
 
-    // Initialize new session view
     // connect
     connect(ui->mainMenuListView, &QListWidget::itemClicked, this, &MainWindow::handleMenuItemSelected);
 
@@ -99,6 +93,19 @@ MainWindow::MainWindow(QWidget *parent)
         delete ui;
     }
 
+    void MainWindow::showMainMenuView() {
+
+        // Clear current items
+        activeQListWidget->clear();
+
+        // Repopulate with main menu items
+        activeQListWidget->addItems(masterMenu->getMenuItems());
+        activeQListWidget->setCurrentRow(0);
+
+        updateDeviceState(DeviceState::InMainMenu);
+
+        qDebug() << "Main menu view is now active";
+    }
 
     void MainWindow::handleMenuItemSelected() {
         QListWidgetItem *selectedItem = ui->mainMenuListView->currentItem();
@@ -185,11 +192,12 @@ MainWindow::MainWindow(QWidget *parent)
                 break;
 
             case DeviceState::On:
-                qDebug() << "DeviceState::Off - Device On";
+                qDebug() << "DeviceState::On - Device On";
                 isDeviceOn = true;
 
                 ui->offFrame->setVisible(false);
-                updateDeviceState(DeviceState::InMainMenu);
+
+                showMainMenuView();
                 break;
 
             case DeviceState::InMainMenu:
@@ -324,6 +332,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     void MainWindow::menuButtonClicked() {
         qDebug() << "Menu button was clicked!";
+        showMainMenuView();
         ui->dateTimeEdit->setVisible(false);
     }
 

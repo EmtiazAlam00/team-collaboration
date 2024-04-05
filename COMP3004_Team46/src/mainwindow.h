@@ -109,6 +109,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    void showMainMenuView();
     void showNewSessionView(); // Function to switch view to "New Session"
     void showSessionLogView();  // switches view to "Logged Sessions"
     void showDeviceSessionLogView();
