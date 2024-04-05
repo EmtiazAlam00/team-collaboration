@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    count = 0; // used for setting date/time
     // create database connection
     db = new DBManager();
 
@@ -73,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     // set device state to inMenu
     updateDeviceState(DeviceState::Off);
 
+    dtCount = 0; // used for setting date/time
 
     // temp buttons
     connect(ui->blueOnButton, &QPushButton::clicked, this, &MainWindow::blueOnClicked);
@@ -115,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     void MainWindow::showMainMenuView() {
-        if (count != 0) {
+        if (dtCount != 0) {
             interruptDateTime();
         }
         // Clear current items
@@ -203,7 +203,8 @@ MainWindow::MainWindow(QWidget *parent)
             case DeviceState::Off:
                 qDebug()<< "DeviceState::Off - Not Draining - Device Off";
                 isDeviceOn = false;
-                if (count != 0) {
+                updateDeviceClock();
+                if (dtCount != 0) {
                     interruptDateTime();
                 }
                 ui->offFrame->setVisible(true);
@@ -548,44 +549,73 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "Selected Time and Date";
         ui->dateTimeEdit->setVisible(true);
         setupDateTime();
-        count = 1;
+        dtCount = 1;
     }
 
     void MainWindow::selectDateTime(){
-        qDebug() << count;
-        count += 1;
+        qDebug() << dtCount;
+        dtCount += 1;
 
-        if (count == 7) {
-            qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date() << ui->dateTimeEdit->dateTime().time();
-            // save date time here
+        if (dtCount == 7) {
+            chrono.setChrono(ui->dateTimeEdit->dateTime());
+            chrono.saveChrono();
+            chrono.readChrono();
             interruptDateTime();
         }
     }
 
-    //TODO: if lowest or highest possible time/date setting (e.g. January), disable and gray out button to prevent carryover
+    //TODO: if lowest or highest possible time/date setting (e.g. January), disable and gray out button to prevent carryover/overflow
 
     void MainWindow::upDateTime(){
         qDebug() << "Date/time edit up clicked";
         QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
         QDateTime newDateTime = currentDateTime;
-        switch(count) {
+        switch(dtCount) {
             case 1:
                 newDateTime = newDateTime.addMonths(1);
+                // if (newDateTime.date().month() == 12) {
+                //     disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
+                // if (newDateTime.date().month() == 2) {
+                //     connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
                 break;
             case 2:
                 newDateTime = newDateTime.addDays(1);
                 break;
             case 3:
                 newDateTime = newDateTime.addYears(1);
+                // if (newDateTime.date().year() == 99) {
+                //     disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
+                // if (newDateTime.date().year() == 1) {
+                //     connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
                 break;
             case 4:
                 newDateTime = newDateTime.addSecs(3600);
+                // if (newDateTime.time().hour() == 12) {
+                //     disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
+                // if (newDateTime.time().hour() == 2) {
+                //     connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
                 break;
             case 5:
                 newDateTime = newDateTime.addSecs(60);
+                // if (newDateTime.time().minute() == 60) {
+                //     disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
+                // if (newDateTime.time().minute() == 2) {
+                //     connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
                 break;
             case 6:
                 newDateTime = newDateTime.addSecs(12 * 3600);
+                // QString ampm = newDateTime.time().toString("AP");
+                // if (ampm == "PM") {
+                //     disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
                 break;
         }
         ui->dateTimeEdit->setDateTime(newDateTime);
@@ -596,30 +626,60 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "Date/time edit down clicked";
         QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
         QDateTime newDateTime = currentDateTime;
-        switch(count) {
+        switch(dtCount) {
             case 1:
                 newDateTime = newDateTime.addMonths(-1);
+                // if (newDateTime.date().month() == 1) {
+                //     disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
+                // if (newDateTime.date().month() == 11) {
+                //     connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
                 break;
             case 2:
                 newDateTime = newDateTime.addDays(-1);
                 break;
             case 3:
                 newDateTime = newDateTime.addYears(-1);
+                // if (newDateTime.date().year() == 0) {
+                //     disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
+                // if (newDateTime.date().year() == 98) {
+                //     connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
                 break;
             case 4:
                 newDateTime = newDateTime.addSecs(-3600);
+                // if (newDateTime.time().hour() == 1) {
+                //     disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
+                // if (newDateTime.time().hour() == 11) {
+                //     connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
                 break;
             case 5:
                 newDateTime = newDateTime.addSecs(-60);
+                // if (newDateTime.time().minute() == 1) {
+                //     disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+                // }
+                // if (newDateTime.time().minute() == 59) {
+                //     connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+                // }
                 break;
             case 6:
                 newDateTime = newDateTime.addSecs(-12 * 3600);
+                // QString ampm = newDateTime.time().toString("AP");
+                // if (ampm == "AM") {
+                    
+                // }
                 break;
         }
         ui->dateTimeEdit->setDateTime(newDateTime);
     }
 
     void MainWindow::setupDateTime() {
+        QDateTime defaultDateTime(QDate(2050, 6, 6), QTime(6, 30));
+        ui->dateTimeEdit->setDateTime(defaultDateTime);
         disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
         disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
         disconnect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
@@ -630,7 +690,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     void MainWindow::interruptDateTime() {
         ui->dateTimeEdit->setVisible(false);
-        QDateTime defaultDateTime(QDate(2000, 1, 1), QTime(0, 0));
+        QDateTime defaultDateTime(QDate(2050, 6, 6), QTime(6, 30));
         ui->dateTimeEdit->setDateTime(defaultDateTime);
         disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
         disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
@@ -638,5 +698,11 @@ MainWindow::MainWindow(QWidget *parent)
         connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
         connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
         connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
-        count = 0;
+        dtCount = 0;
+    }
+
+    void MainWindow::updateDeviceClock() {
+        QDateTime realdt = chrono.retrieveChrono();
+        QString timeString = realdt.toString("hh:mm:ss");
+        ui->deviceClock->setText(timeString);
     }

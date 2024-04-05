@@ -27,6 +27,7 @@
 
 #include "session.h"
 
+#include "chrono.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -115,7 +116,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    int count;
 
     void showNewSessionView(); // Function to switch view to "New Session"
     void showSessionLogView();  // switches view to "Logged Sessions"
@@ -144,12 +144,15 @@ private:
     QTimer batteryDrainTimer;
 
     //chrono
+    int dtCount;
+    Chrono chrono;
     void setDateTime();
     void selectDateTime();
     void upDateTime();
     void downDateTime();
     void setupDateTime();
     void interruptDateTime();
+    void updateDeviceClock();
 
 
 };
