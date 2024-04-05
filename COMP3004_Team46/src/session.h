@@ -14,6 +14,7 @@ class Session: public QObject{
         Session(int ID, int l, QDateTime dt);
         ~Session();
         int getID();
+        QTimer* getTimer();
         int getLength();
         QDateTime getStartTime();
 
@@ -21,6 +22,7 @@ class Session: public QObject{
         int id;
         int length;
         QDateTime dt;
+        QTimer* timer;
 
 };
 
