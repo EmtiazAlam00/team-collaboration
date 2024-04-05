@@ -88,12 +88,30 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->deliverTreatmentButton, &QPushButton::clicked, this, &MainWindow::deliverTreatmentButtonClicked);
     connect(ui->shutdownButton, &QPushButton::clicked, this, &MainWindow::shutdownButtonClicked);
 
+    // recordings = db->getSessionsHistoryPC(); // changed
+    // how should i store recordings and the history
+        // maybe having QVector<Session*> then having a toString functions
+    
     }
 
 
     MainWindow::~MainWindow()
     {
+        for (int i=0; i<recordings.size(); i++){
+            delete recordings[i];
+        }
         delete ui;
+        delete db;
+    }
+
+    void MainWindow::beginSession(Session* s){
+        currentSession = s;
+
+        // update timer stuff
+        
+        const QDateTime& sTime = s->getStartTime();
+        Log* loggedSession = new Log("1", sTime, 0, 0);
+        recordings.append(loggedSession); // should be removed if current session is stopped
     }
 
     void MainWindow::showMainMenuView() {
@@ -509,6 +527,15 @@ MainWindow::MainWindow(QWidget *parent)
         } else {
             ui->batteryLevelBar->setStyleSheet(lowBatteryHealth);
         }
+
+        // save session only if session completed
+        // DeviceState == "ON"
+        // if (batteryLevel > 0 && currentSession->getTimer()->remainingTime() == 0){ // current session/timer does not currently exits so it will segfault for now
+            // if (ui->mainMenuListView->currentItem()->text() == "NEW SESSION"){
+            //     // set or get db baseline hz info recordings.last()
+            //     db->addSession(recordings.last()->getStartTime(), recordings.last()->getDuration(), recordings.last()->getBaselineHZ(), recordings.last()->getBaselineHZ());
+            // }
+        // }
 
         // If battery level is below 0, shut down the device
         if (batteryLevel <= 0) {
