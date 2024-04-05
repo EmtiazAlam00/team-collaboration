@@ -108,6 +108,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    int count;
 
     void showNewSessionView(); // Function to switch view to "New Session"
     void showSessionLogView();  // switches view to "Logged Sessions"

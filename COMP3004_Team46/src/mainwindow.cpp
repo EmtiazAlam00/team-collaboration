@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    count = 0; // used for setting date/time
     // create database connection
     db = new DBManager();
 
@@ -517,27 +517,79 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "Selected Time and Date";
         ui->dateTimeEdit->setVisible(true);
         setupDateTime();
+        count = 0;
     }
-
 
     void MainWindow::selectDateTime(){
-        qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date() << ui->dateTimeEdit->dateTime().time();
-        ui->dateTimeEdit->setVisible(false);
-        connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
-        connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
-        connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+        qDebug() << count;
+        count += 1;
+
+        if (count == 6) {
+            qDebug() << "Date time is set to" << ui->dateTimeEdit->dateTime().date() << ui->dateTimeEdit->dateTime().time();
+            ui->dateTimeEdit->setVisible(false);
+            disconnect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upDateTime);
+            disconnect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downDateTime);
+            disconnect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectDateTime);
+            connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
+            connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
+            connect(ui->selectButton, &QPushButton::clicked, this, &MainWindow::selectButtonClicked);
+        }
     }
+
+    //TODO: if lowest or highest possible time/date setting (e.g. January), disable and gray out button to prevent carryover
 
     void MainWindow::upDateTime(){
         qDebug() << "Date/time edit up clicked";
         QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
-        QDateTime newDateTime = currentDateTime.addSecs(3600);
+        QDateTime newDateTime = currentDateTime;
+        switch(count) {
+            case 0:
+                newDateTime = newDateTime.addMonths(1);
+                break;
+            case 1:
+                newDateTime = newDateTime.addDays(1);
+                break;
+            case 2:
+                newDateTime = newDateTime.addYears(1);
+                break;
+            case 3:
+                newDateTime = newDateTime.addSecs(3600);
+                break;
+            case 4:
+                newDateTime = newDateTime.addSecs(60);
+                break;
+            case 5:
+                newDateTime = newDateTime.addSecs(12 * 3600);
+                break;
+        }
         ui->dateTimeEdit->setDateTime(newDateTime);
     }
+
+
     void MainWindow::downDateTime(){
         qDebug() << "Date/time edit down clicked";
         QDateTime currentDateTime = ui->dateTimeEdit->dateTime();
-        QDateTime newDateTime = currentDateTime.addSecs(-3600);
+        QDateTime newDateTime = currentDateTime;
+        switch(count) {
+            case 0:
+                newDateTime = newDateTime.addMonths(-1);
+                break;
+            case 1:
+                newDateTime = newDateTime.addDays(-1);
+                break;
+            case 2:
+                newDateTime = newDateTime.addYears(-1);
+                break;
+            case 3:
+                newDateTime = newDateTime.addSecs(-3600);
+                break;
+            case 4:
+                newDateTime = newDateTime.addSecs(-60);
+                break;
+            case 5:
+                newDateTime = newDateTime.addSecs(-12 * 3600);
+                break;
+        }
         ui->dateTimeEdit->setDateTime(newDateTime);
     }
 

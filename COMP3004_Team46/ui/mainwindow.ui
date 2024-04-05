@@ -612,6 +612,33 @@ QPushButton:pressed {
       <string/>
      </property>
     </widget>
+    <widget class="QDateTimeEdit" name="dateTimeEdit">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>90</y>
+       <width>221</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>DejaVu Sans</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="visible">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QDateTimeEdit {
+background-color: #ffffff; 
+}</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="blueOnButton">
     <property name="geometry">
@@ -1057,22 +1084,6 @@ QPushButton:pressed {
       <string>ADMIN PANEL</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>410</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="visible">
-      <bool>false</bool>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
