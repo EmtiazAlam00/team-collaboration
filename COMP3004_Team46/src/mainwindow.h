@@ -106,7 +106,6 @@ enum class DeviceState {
     SessionPaused, //unknown?
     SessionCompletion,//unknown?
     SessionLogViewing,//unknown?
-    Shutdown            // no battery (different from off)
 };
 
 public:
@@ -168,8 +167,6 @@ private slots:
     void contactInitButtonClicked();
     void contactLostButtonClicked();
     void deliverTreatmentButtonClicked();
-
-    void shutdownButtonClicked();
 
 private:
     Ui::MainWindow *ui;
