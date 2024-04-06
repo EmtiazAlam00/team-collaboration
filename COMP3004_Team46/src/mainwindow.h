@@ -43,6 +43,7 @@ QT_END_NAMESPACE
  * - QTimer batteryDrainTimer: Timer for simulating battery drain.
  * - int dtCount: Counter used in date/time setting operations.
  * - Chrono chrono: Manages device chronometer functionalities.
+ * - QTimer clockUpdate: Timer for device clock display.
  *
  * Class Functions:
  * - MainWindow(QWidget *parent = nullptr): Initializes the UI and connects signals to slots.
@@ -88,6 +89,7 @@ QT_END_NAMESPACE
  * - void setupDateTime(): Prepares the UI for date/time setting.
  * - void interruptDateTime(): Cancels the date/time setting process.
  * - void updateDeviceClock(): Updates the device's clock display with the current time.
+ * - void continueUpdate(): Updates the UI to reflect the current device time.
  */
 
 class MainWindow : public QMainWindow
@@ -198,8 +200,9 @@ private:
     QTimer batteryDrainTimer;
 
     //chrono
-    int dtCount;
+    int dtCount = 0;
     Chrono chrono;
+    QTimer clockUpdate;
     void setDateTime();
     void selectDateTime();
     void upDateTime();
@@ -207,6 +210,7 @@ private:
     void setupDateTime();
     void interruptDateTime();
     void updateDeviceClock();
+    void continueUpdate();
 
 
 };

@@ -7,7 +7,6 @@ Chrono::Chrono()
 
 void Chrono::setChrono(QDateTime dtEdit) {
     dt = dtEdit;
-    qDebug() << "Date time is set to" << dt.toString("MM/dd/yy HH:mm");
 }
 
 QDateTime Chrono::getChrono() {
@@ -16,7 +15,6 @@ QDateTime Chrono::getChrono() {
 
 void Chrono::saveChrono() {
     currentdt = QDateTime::currentDateTime();
-    qDebug() << "Current date time is " << currentdt.toString("MM/dd/yy HH:mm");
     QFile file("chrono.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         qDebug() << "Error: Failed to open file for writing.";
@@ -28,10 +26,6 @@ void Chrono::saveChrono() {
     out << "Stored Current QDateTime: " << currentdt.toString(Qt::ISODate) << Qt::endl;
 
     file.seek(0);
-    qDebug() << file.readAll();
-
-
-
     file.close();
 }
 
@@ -88,14 +82,8 @@ QDateTime Chrono::retrieveChrono() {
         return QDateTime();
     }
 
-    qDebug() << storeddt;
-    qDebug() << storedCurrentdt;
-
     int offset = storedCurrentdt.secsTo(storeddt);
     QDateTime realCurrentdt = QDateTime::currentDateTime().addSecs(offset);
-
-    qDebug() << realCurrentdt;
-
     file.close();
     return realCurrentdt;
 }
