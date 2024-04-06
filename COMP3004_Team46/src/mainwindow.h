@@ -1,10 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
 #include <QMainWindow>
 #include <QPushButton>
-
 #include <QMainWindow>
 #include <QSpinBox>
 #include <QListWidget>
@@ -14,24 +12,83 @@
 #include <QVector>
 #include <QtGlobal>
 #include <QDateTime>
+#include <QDebug>
 
 #include "menu.h"
-
 #include <QTimer>
-
 #include "battery.h"
-
 #include "dbmanager.h"
-
 #include "log.h"
-
 #include "session.h"
-
 #include "chrono.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+/* Class Purpose: Manages the main user interface of the application, handling user interactions,
+ * controlling device state, managing session data, and updating the UI accordingly.
+ *
+ * Data Members:
+ * - Menu* masterMenu, mainMenuOG: Pointers to top-level and original menus for navigation.
+ * - DBManager* db: Handles database operations for session persistence.
+ * - Session* currentSession: Currently active session, if any.
+ * - QVector<Log*> recordings: Stores logs of past sessions.
+ * - QListWidget *activeQListWidget: Currently active list widget for menu navigation.
+ * - DeviceState currentState: Represents the current operational state of the device.
+ * - bool isDeviceOn: Indicates whether the device is powered on.
+ * - QTimer flashRedTimer, flashGreenTimer: Timers for LED flashing functionality.
+ * - bool redLedState, greenLedState: Indicates the on/off state of the LEDs.
+ * - Battery battery: Manages the battery level and drain rates.
+ * - QTimer batteryDrainTimer: Timer for simulating battery drain.
+ * - int dtCount: Counter used in date/time setting operations.
+ * - Chrono chrono: Manages device chronometer functionalities.
+ *
+ * Class Functions:
+ * - MainWindow(QWidget *parent = nullptr): Initializes the UI and connects signals to slots.
+ * - ~MainWindow(): Destructor, cleans up allocated resources.
+ * - DeviceState getDeviceState() const: Returns the current state of the device.
+ * - void updateMenu(const QString, const QStringList): Updates the active menu displayed on the UI.
+ *
+ * Slots:
+ * - void showMainMenuView(): Shows the main menu interface.
+ * - void handleMenuItemSelected(): Handles user selections from the menu.
+ * - void powerButtonClicked(): Toggles the device's power state.
+ * - void upButtonClicked(): Navigates up through the menu or options.
+ * - void downButtonClicked(): Navigates down through the menu or options.
+ * - void pauseButtonClicked(): Pauses the current session or operation.
+ * - void startButtonClicked(): Starts a new session or resumes a paused session.
+ * - void stopButtonClicked(): Stops the current session.
+ * - void menuButtonClicked(): Returns to the main menu from any state.
+ * - void selectButtonClicked(): Selects the current menu option or confirms an action.
+ * - void applyToScalpChanged(int index): Updates the state based on the scalp application.
+ * - void startDrainBattery(): Initiates battery drainage at the current rate.
+ * - void stopDrainBattery(): Stops the battery from draining.
+ * - void chargeBattery(): Recharges the battery to full.
+ * - void updateBatteryLevel(): Updates the UI to reflect the current battery level.
+ * - void lowerBatteryLevel(): Manually decreases the battery level for testing.
+ * - void flashRedLED(): Toggles the red LED's flashing state.
+ * - void flashGreenLED(): Toggles the green LED's flashing state.
+ * - void setLedState(QPushButton* led, const QString& state): Sets an LED to a specific state.
+ * - void flashLED(QPushButton* led, QTimer* timer): Initiates or stops flashing an LED.
+ * - void stopRedFlashing(): Stops the red LED from flashing.
+ * - void stopGreenFlashing(): Stops the green LED from flashing.
+ *
+ * Utility Functions:
+ * - void showNewSessionView(): Displays UI elements for starting a new session.
+ * - void showSessionLogView(): Displays the session log view.
+ * - void showDeviceSessionLogView(): Shows the device session log.
+ * - void showPCSessionLogView(): Shows the PC session log.
+ * - void beginSession(Session* s): Starts a new session with the provided session object.
+ * - void updateDeviceState(DeviceState newState): Changes the device's state and updates the UI accordingly.
+ * - void setDateTime(): Initiates the date/time setting process.
+ * - void selectDateTime(): Confirms the selected date/time.
+ * - void upDateTime(): Increments the selected date/time component.
+ * - void downDateTime(): Decrements the selected date/time component.
+ * - void setupDateTime(): Prepares the UI for date/time setting.
+ * - void interruptDateTime(): Cancels the date/time setting process.
+ * - void updateDeviceClock(): Updates the device's clock display with the current time.
+ */
 
 class MainWindow : public QMainWindow
 {

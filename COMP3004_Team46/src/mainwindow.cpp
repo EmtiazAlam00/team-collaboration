@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,14 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     activeQListWidget = ui->mainMenuListView;
     ui->menuLabel->setText(masterMenu->getName());
 
-
-
-    // Initialize new session view
     // connect
     connect(ui->mainMenuListView, &QListWidget::itemClicked, this, &MainWindow::handleMenuItemSelected);
-
-
-
 
     // Connect each button to its respective slot
     connect(ui->powerButton, &QPushButton::clicked, this, &MainWindow::powerButtonClicked);
@@ -43,15 +36,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->applyToScalpAdminBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::applyToScalpChanged);
 
     //battery
-    connect(ui->startDrainButton, &QPushButton::clicked, this, &MainWindow::startDrainBattery);
+//    connect(ui->startDrainButton, &QPushButton::clicked, this, &MainWindow::startDrainBattery);
     connect(ui->stopDrainButton, &QPushButton::clicked, this, &MainWindow::stopDrainBattery);
     connect(ui->chargeAdminButton, &QPushButton::clicked, this, &MainWindow::chargeBattery);
     connect(ui->lowerBatteryButton, &QPushButton::clicked, this, &MainWindow::lowerBatteryLevel);
 
     // Setup and connect the battery drain timer
     connect(&batteryDrainTimer, &QTimer::timeout, this, &MainWindow::updateBatteryLevel);
-
-
 
 
     //DISABLE THE LED BUTTONS so you can't press the lights
@@ -64,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
     setLedState(ui->blueLED, "off");
     setLedState(ui->greenLED, "off");
 
-
     // Initialize displays
     updateBatteryLevel();
     // disable spin box
@@ -74,24 +64,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     dtCount = 0; // used for setting date/time
 
-    // temp buttons
-    connect(ui->blueOnButton, &QPushButton::clicked, this, &MainWindow::blueOnClicked);
-    connect(ui->redOnButton, &QPushButton::clicked, this, &MainWindow::redOnClicked);
-    connect(ui->greenOnButton, &QPushButton::clicked, this, &MainWindow::greenOnClicked);
-
-    connect(ui->blueOffButton, &QPushButton::clicked, this, &MainWindow::blueOffClicked);
-    connect(ui->redOffButton, &QPushButton::clicked, this, &MainWindow::redOffClicked);
-    connect(ui->greenOffButton, &QPushButton::clicked, this, &MainWindow::greenOffClicked);
-
-    connect(ui->contactInitButton, &QPushButton::clicked, this, &MainWindow::contactInitButtonClicked);
-    connect(ui->contactLostButton, &QPushButton::clicked, this, &MainWindow::contactLostButtonClicked);
-    connect(ui->deliverTreatmentButton, &QPushButton::clicked, this, &MainWindow::deliverTreatmentButtonClicked);
-    connect(ui->shutdownButton, &QPushButton::clicked, this, &MainWindow::shutdownButtonClicked);
-
     // recordings = db->getSessionsHistoryPC(); // changed
     // how should i store recordings and the history
         // maybe having QVector<Session*> then having a toString functions
-    
     }
 
 
@@ -303,12 +278,6 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    void MainWindow::shutdownButtonClicked() {
-        // Set the device state to Shutdown
-        updateDeviceState(DeviceState::Shutdown);
-
-    }
-
     void MainWindow::powerButtonClicked() {
         double batteryLevel = battery.getBatteryLevel();
         if (batteryLevel == 0){
@@ -413,17 +382,24 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     void MainWindow::applyToScalpChanged(int index) {
-        bool isAppliedToScalp = (index == 1); // 0 = false, 1 = true
 
-        // Update the appliedToScalp member variable accordingly
-        appliedToScalp = isAppliedToScalp;
-        qDebug() << "Apply to Scalp is" << (isAppliedToScalp ? "true" : "false");
+        if (currentState == DeviceState::Off){
+            qDebug() << "Device is off, scalp signal doesn't matter.";
+        }else{
 
-        if (isAppliedToScalp) {
-            updateDeviceState(DeviceState::SessionActive);
-        } else {
-            updateDeviceState(DeviceState::ContactLost);
+            bool isAppliedToScalp = (index == 1); // 0 = false, 1 = true
+
+            // Update the appliedToScalp member variable accordingly
+            appliedToScalp = isAppliedToScalp;
+            qDebug() << "Apply to Scalp is" << (isAppliedToScalp ? "true" : "false");
+
+            if (isAppliedToScalp) {
+                updateDeviceState(DeviceState::SessionActive);
+            } else {
+                updateDeviceState(DeviceState::ContactLost);
+            }
         }
+
     }
 
 
