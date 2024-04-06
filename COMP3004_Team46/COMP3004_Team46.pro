@@ -35,8 +35,8 @@ HEADERS += \
     src/log.h \
     src/menu.h \
     src/session.h\
-    src/eegsite.cpp\
-    src/qcustomplot.cpp
+    src/eegsite.h\
+    src/qcustomplot.h
 
 FORMS += \
     $${forms_dir}/mainwindow.ui
