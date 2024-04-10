@@ -64,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     dtCount = 0;
     connect(&clockUpdate, &QTimer::timeout, this, &MainWindow::continueUpdate);
+    chrono.readChrono();
     clockUpdate.start(1000);
 
     // recordings = db->getSessionsHistoryPC(); // changed
@@ -531,9 +532,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     void MainWindow::selectDateTime(){
-        qDebug() << dtCount;
         dtCount += 1;
-
         if (dtCount == 7) {
             chrono.setChrono(ui->dateTimeEdit->dateTime());
             chrono.saveChrono();
