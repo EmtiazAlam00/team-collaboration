@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     dtCount = 0;
     connect(&clockUpdate, &QTimer::timeout, this, &MainWindow::continueUpdate);
+    chrono.readChrono();
     clockUpdate.start(1000);
 
     // recordings = db->getSessionsHistoryPC(); // changed
