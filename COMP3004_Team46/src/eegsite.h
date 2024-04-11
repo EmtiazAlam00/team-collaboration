@@ -15,7 +15,7 @@ class EegSite{
         EegSite(bool isConnected = false);
         static const double SAMPLING_RATE;
         void getSignal(vector<double>& v, double duration);
-        static double calculateDominant(vector<double>& v);
+        static float calculateDominant(vector<double>& v);
         void deliverTreatment(double treatmentFreq, long duration);
 private:
         //Used to determine if this is connected to an actual EEG site

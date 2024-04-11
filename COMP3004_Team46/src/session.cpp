@@ -1,19 +1,37 @@
 #include "session.h"
 
-Session::Session(int ID, int l, QDateTime date_time){
-    id = ID;
-    length = l;
-    dt = date_time;
-    timer = new QTimer(this);
+Session::Session( const QDateTime& startTime)
+    :  startTime(startTime), beforeBaselines(7,0.0), afterBaselines(7, 0.0){
+
 }
 
 Session::~Session(){
-    delete timer;
+
+}
+
+void Session::print()
+{
+    qDebug()<< startTime.toString();
+    qDebug()<< "Befores: "<< beforeBaselines;
+    qDebug()<< "Afters: " << afterBaselines;
 }
 
 //getters
-int Session:: getID() { return id;}
-QTimer* Session:: getTimer() { return timer;}
-int Session:: getLength() { return length;}
-QDateTime Session:: getStartTime() { return dt;}
+
+
+QDateTime Session::getStartTime() { return startTime;}
+float Session::getBaselineAfter(int num){
+    return afterBaselines[num];
+}
+
+void Session::setBefore(int i, float baselineVal)
+{
+    beforeBaselines[i] = baselineVal;
+}
+
+void Session::setAfter(int i, float baselineVal)
+{
+    afterBaselines[i] = baselineVal;
+}
+
 

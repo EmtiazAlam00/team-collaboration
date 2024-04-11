@@ -5,24 +5,33 @@
 #include <QString>
 #include <QTimer>
 #include <QDateTime>
+#include <QDebug>
 
 class Session: public QObject{
 
     Q_OBJECT
 
     public:
-        Session(int ID, int l, QDateTime dt);
+        Session(const QDateTime& startTime);
         ~Session();
-        int getID();
-        QTimer* getTimer();
-        int getLength();
+        void print();
+        //getters
         QDateTime getStartTime();
+        float getBaselineAfter(int); // get baseline based on 1-7 and "after"/"before"
+        void setBefore(int i, float baselineVal);
+        void setAfter(int i, float baselineVal);
+        const QVector<float>& getBeforeBaselines(){ return beforeBaselines;}
+        const QVector<float>& getAfterBaselines() {return afterBaselines;}
+        //setter
+//        void setBaseline(int, QString&, const float);
+
 
     private:
-        int id;
-        int length;
-        QDateTime dt;
-        QTimer* timer;
+
+        QDateTime startTime;
+        QVector<float> beforeBaselines;
+        QVector<float> afterBaselines;
+
 
 };
 
