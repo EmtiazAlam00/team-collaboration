@@ -38,6 +38,7 @@ HEADERS += \
     src/eegsite.h\
     src/qcustomplot.h
 
+
 FORMS += \
     $${forms_dir}/mainwindow.ui
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
-    <height>373</height>
+    <width>1203</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -652,6 +652,54 @@ background-color: #ffffff;
       <string/>
      </property>
     </widget>
+    <widget class="QWidget" name="SessionViewWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>70</y>
+       <width>231</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: white</string>
+     </property>
+     <widget class="QLabel" name="sessionTimerLabel">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>231</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 28px</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="SessionProgressBar">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>120</y>
+        <width>118</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QFrame" name="adminFrame">
     <property name="geometry">
@@ -864,22 +912,100 @@ QPushButton:pressed {
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QComboBox" name="selectElectrode">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>240</y>
-      <width>231</width>
+      <x>430</x>
+      <y>190</y>
+      <width>221</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Select Electrode</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 5</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electrode 7</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QCustomPlot" name="plotArea" native="true">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>220</y>
+      <width>331</width>
+      <height>121</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pcViewLabel">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>20</y>
+      <width>181</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>pc view here?</string>
+     <string>PC View</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="pcView">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>40</y>
+      <width>351</width>
+      <height>281</height>
+     </rect>
     </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>src/qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

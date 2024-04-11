@@ -20,16 +20,16 @@ public:
 
     DBManager();
 
-    bool addSession(const QDateTime& date_time, int length,  float* baselineBefore, float* baselineAfter);
+    bool addSession(Session* sessionInfo);
     bool deleteSessions();
-    Session* getSession(const QDateTime& date_time);
-    QVector<QStringList> getSessionsHistoryDevice();
-    QVector<QStringList> getSessionsHistoryPC();
+//    Session* getSession(const QDateTime& date_time);
+    QVector<QString> getSessionsHistoryDevice();
+    QVector<QString> getSessionsHistoryPC();
 
 private:
     QSqlDatabase neuresetDB;
     bool DBInit();
-    bool isValidRecord(const QString& recordType, const QDateTime& time, int length, float* baselineBefore, float* baselineAfter);
+    bool isValidRecord(const QString& recordType, const QDateTime& time);
 };
 
 #endif // DBMANAGER_H

@@ -38,7 +38,7 @@ private:
     double batteryLevel;
     double drainRate; // Current drain rate
     static constexpr double DRAIN_RATE_IDLE = 0.01;
-    static constexpr double DRAIN_RATE_ACTIVE = 0.05;
+    static constexpr double DRAIN_RATE_ACTIVE = 1.0;
 };
 
 #endif // BATTERY_H
