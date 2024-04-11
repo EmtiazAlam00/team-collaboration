@@ -107,9 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     MainWindow::~MainWindow()
     {
-        for (int i=0; i<recordings.size(); i++){
-            delete recordings[i];
-        }
+
         delete ui;
         delete db;
     }
@@ -120,8 +118,7 @@ MainWindow::MainWindow(QWidget *parent)
         // update timer stuff
         
         const QDateTime& sTime = s->getStartTime();
-        Log* loggedSession = new Log("1", sTime, 0, 0);
-        recordings.append(loggedSession); // should be removed if current session is stopped
+
     }
 
     void MainWindow::showMainMenuView() {

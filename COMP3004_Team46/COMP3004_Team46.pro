@@ -21,7 +21,6 @@ SOURCES += \
     src/battery.cpp \
     src/chrono.cpp \
     src/dbmanager.cpp \
-    src/log.cpp \
     src/menu.cpp \
     src/session.cpp\
     src/eegsite.cpp\
@@ -32,7 +31,6 @@ HEADERS += \
     src/battery.h \
     src/chrono.h \
     src/dbmanager.h \
-    src/log.h \
     src/menu.h \
     src/session.h\
     src/eegsite.h\
