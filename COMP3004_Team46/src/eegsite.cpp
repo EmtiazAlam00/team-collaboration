@@ -85,19 +85,19 @@ void EegSite::generateWeights(double &alpha, double &beta, double &theta, double
 }
 
 
-double EegSite::calculateDominant(vector<double>& v)
+float EegSite::calculateDominant(vector<double>& v)
 {
     int N = v.size();
     //Vector of complex doubles as defined in the ffftw library
     vector<fftw_complex> out(N/2+1);
 
-    qDebug()<<"FFT: "<<Qt::endl;
+//    qDebug()<<"FFT: "<<Qt::endl;
     fftw_plan plan_forward = fftw_plan_dft_r2c_1d(N, v.data(), reinterpret_cast<fftw_complex*>(out.data()), FFTW_ESTIMATE);
 
     fftw_execute(plan_forward);
 
     // Calculate power spectrum
-    qDebug()<< "Power spectrum: "<< Qt::endl;
+//    qDebug()<< "Power spectrum: "<< Qt::endl;
     vector<double> powerSpectrum(out.size());
 
     for (size_t k = 0; k < out.size(); ++k) {
@@ -138,20 +138,20 @@ double EegSite::calculateDominant(vector<double>& v)
     double maxPower = max({alphaPower, betaPower, thetaPower, deltaPower});
     FrequencyBand dominantBand;
     if (maxPower == alphaPower){
-        qInfo()<< "Alpha is dominant";
+//        qInfo()<< "Alpha is dominant";
         dominantBand = alphaBand;
     }
     else if (maxPower == betaPower){
         dominantBand = betaBand;
-        qInfo()<< "Beta is dominant";
+//        qInfo()<< "Beta is dominant";
     }
     else if (maxPower == thetaPower){
         dominantBand = thetaBand;
-        qInfo()<< "Theta is dominant";
+//        qInfo()<< "Theta is dominant";
     }
     else{
         dominantBand = deltaBand;
-        qInfo()<< "Delta is dominant";
+//        qInfo()<< "Delta is dominant";
     }
 
     // Find the frequency with the maximum power within the dominant band
@@ -170,7 +170,7 @@ double EegSite::calculateDominant(vector<double>& v)
     // Destroy the FFT plan
     fftw_destroy_plan(plan_forward);
 
-    return maxFreq;
+    return (float)maxFreq;
 }
 
 void EegSite::deliverTreatment(double treatmentFreq, long duration){

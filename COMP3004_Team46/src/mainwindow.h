@@ -10,17 +10,23 @@
 #include <QTime>
 #include <QStatusBar>
 #include <QVector>
+#include <vector>
 #include <QtGlobal>
 #include <QDateTime>
 #include <QDebug>
 
 #include "menu.h"
+#include "qcustomplot.h"
 #include <QTimer>
 #include "battery.h"
 #include "dbmanager.h"
 #include "log.h"
 #include "session.h"
 #include "chrono.h"
+#include "eegsite.h"
+
+
+using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -111,7 +117,7 @@ enum class DeviceState {
 };
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     DeviceState getDeviceState() const;
 //    DeviceState currentState;
@@ -145,6 +151,7 @@ private slots:
     void menuButtonClicked();
     void selectButtonClicked();
     void applyToScalpChanged(int index);
+    void selectElectrode(int index);
 
     // battery slots
     void startDrainBattery();
@@ -170,7 +177,20 @@ private slots:
     void contactLostButtonClicked();
     void deliverTreatmentButtonClicked();
 
+    // Slots for session treatment progression
+    void analysisTimeComplete();
+    void updateSessionTimerLabel();
+    void treatmentTimeComplete();
+    void pausingOVER();
+
+
 private:
+    const int TREATMENT_TIME = 1000;
+    const int PAUSE_TIME = 10000;
+    const int ANALYSIS_TIME = 5000;
+    const double ESTIMATED_SESSION_TIME = 30;
+    const int NUM_EEG_SITES = 7;
+
     Ui::MainWindow *ui;
 
     void showNewSessionView(); // Function to switch view to "New Session"
@@ -211,6 +231,24 @@ private:
     void interruptDateTime();
     void updateDeviceClock();
     void continueUpdate();
+
+    //Running of session variables
+    int roundCount = 0;
+    Session* s;
+    QVector<EegSite> eegSites;
+    QTimer sessionTimer;
+    QTimer analysisTimer;
+    QTime startTime;
+    QTimer deliverTreatmentTimer;
+    QTimer pausingTimer;
+    //
+
+    //Plotting of waveforms
+    QVector<QVector<double>> waveforms;
+    QVector<double> xData;
+
+
+
 
 
 };

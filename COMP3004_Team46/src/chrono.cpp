@@ -32,8 +32,7 @@ void Chrono::saveChrono() {
 void Chrono::readChrono() {
     QFile file("chrono.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Error: Failed to open file for reading.";
-        qDebug() << "Error: Using system date/time.";
+        qDebug() << "Error: Failed to open file for reading!";
         return;
     }
 
@@ -50,9 +49,11 @@ QDateTime Chrono::retrieveChrono() {
     QDateTime storeddt;
     QDateTime storedCurrentdt;
 
+
     QFile file("chrono.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return QDateTime::currentDateTime();
+        qDebug() << "Failed to open file for reading!";
+        return storeddt;
     }
 
     QTextStream in(&file);
@@ -76,8 +77,9 @@ QDateTime Chrono::retrieveChrono() {
     }
 
     if (storeddt.isNull() || storedCurrentdt.isNull()) {
+        qDebug() << "Error: Failed to retrieve QDateTime data.";
         file.close();
-        return QDateTime::currentDateTime();
+        return QDateTime();
     }
 
     int offset = storedCurrentdt.secsTo(storeddt);
