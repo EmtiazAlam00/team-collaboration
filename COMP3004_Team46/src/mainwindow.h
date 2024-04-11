@@ -20,7 +20,6 @@
 #include <QTimer>
 #include "battery.h"
 #include "dbmanager.h"
-#include "log.h"
 #include "session.h"
 #include "chrono.h"
 #include "eegsite.h"
@@ -145,7 +144,6 @@ private:
     DBManager* db;
     Session* currentSession; // changed
     int currentTimerCount;
-    QVector<Log*> recordings;
 
     //Ui::MainWindow *ui;
     QListWidget *activeQListWidget;
