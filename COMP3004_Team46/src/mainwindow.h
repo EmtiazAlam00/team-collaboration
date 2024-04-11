@@ -50,6 +50,16 @@ QT_END_NAMESPACE
  * - int dtCount: Counter used in date/time setting operations.
  * - Chrono chrono: Manages device chronometer functionalities.
  * - QTimer clockUpdate: Timer for device clock display.
+ * - int roundCount: A counter to know how many rounds of therapy have occurred.
+ * - Session* s: Stores the current session data.
+ * - QVector<EegSite> eegSites: stores all the EegSites (For testing and project purposes there are 7 eegSites).
+ * - QTimer sessionTimer: The timer for timing each session.
+ * - QTimer analysisTimer: The timer to time each analysis time, and update state when it times out.
+ * - QTime startTime: Start time variable, stored to session so session data can be correctly stored.
+ * - QTimer deliverTreatmentTimer: The timer to time each treatment delivery time, and update state when it times out.
+ * - QTimer pausingTimer: The timer to time contact lost/ paused time, and update state when it times out
+ * - QVector<QVector<double>> waveforms: Stores the waveform from the most recent analysis to plot the eeg signals using qcustomplot
+ * - QVector<double> xData - the x axis data- values 0 to 61 for plotting of waveforms over a minute- a signal per second
  *
  * Class Functions:
  * - MainWindow(QWidget *parent = nullptr): Initializes the UI and connects signals to slots.
@@ -69,6 +79,7 @@ QT_END_NAMESPACE
  * - void menuButtonClicked(): Returns to the main menu from any state.
  * - void selectButtonClicked(): Selects the current menu option or confirms an action.
  * - void applyToScalpChanged(int index): Updates the state based on the scalp application.
+ * - void selectElectrode(int index): Selects the electrode to know which electrode signal to plot.
  * - void startDrainBattery(): Initiates battery drainage at the current rate.
  * - void stopDrainBattery(): Stops the battery from draining.
  * - void chargeBattery(): Recharges the battery to full.
@@ -80,6 +91,10 @@ QT_END_NAMESPACE
  * - void flashLED(QPushButton* led, QTimer* timer): Initiates or stops flashing an LED.
  * - void stopRedFlashing(): Stops the red LED from flashing.
  * - void stopGreenFlashing(): Stops the green LED from flashing.
+ * - void analysisTimeComplete(): update the DeviceState from sessionActive to DeliverTreatment or SessionCompletion
+ * - void updateSessionTimerLabel(): updates the timer in session view
+ * - void treatmentTimeComplete(): update the DeviceState from DeliverTreatment to SessionActive
+ * - void pausingOVER(): updates the DeviceState to SessionCompletion
  *
  * Utility Functions:
  * - void showNewSessionView(): Displays UI elements for starting a new session.
@@ -96,6 +111,8 @@ QT_END_NAMESPACE
  * - void interruptDateTime(): Cancels the date/time setting process.
  * - void updateDeviceClock(): Updates the device's clock display with the current time.
  * - void continueUpdate(): Updates the UI to reflect the current device time.
+ *
+ * -const int TREATMENT_TIME, PAUSE_TIME, ANALYSIS_TIME, ESTIMATED_SESSION_TIME, NUM_EEG_SITES: constants set currently for testing purposes
  */
 
 class MainWindow : public QMainWindow
