@@ -4,10 +4,42 @@
 - Danielle Nkem 101218592
 - Charles Yan 101193325
 - Kaitlyn Warhurst 101217643
-- Emtiaz Alam, 101114889
+- Emtiaz Alam 101114889
 - Jearina Tseung 101199241
 
 TA: Vishal
+
+Files:
+- DBManager.cpp
+- DBManager.h
+- battery.h
+- battery.cpp
+- chrono.cpp
+- chrono.h
+- eegsite.h
+- eegsite.cpp
+- main.cpp
+- mainwindow.cpp
+- mainwindow.h
+- menu.cpp
+- menu.h
+- qcustomplot.h
+- qcustomplot.cpp
+- session.cpp
+- session.h
+
+Diagrams & Documentations:
+- State Diagram.pdf
+- UML Diagram.pdf
+- Use Cases.pdf
+- Sequence Diagram.pdf
+- Sequence Diagram.pdf
+- Sequence Diagram.pdf
+- Sequance Diagram.pdf
+- Sequence Diagram.pdf
+
+Assumptions/Notes:
+- 
 
 Assigned Tasks:
 - Use Cases: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
@@ -19,9 +51,9 @@ Assigned Tasks:
     - connection loss between electrodes and the device: Emtiaz
 - UML State machine diagram: Kaitlyn
 - Textual explanation: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
-- Traceablility Matrix:
-    - Row #: ...
-...
+- Traceablility Matrix: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
+- Code: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
+
 
 Needed external libraries and how to install/compile them:
 fftw3: Download from: https://www.fftw.org/download.html 
