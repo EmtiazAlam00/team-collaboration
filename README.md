@@ -39,8 +39,14 @@ Diagrams & Documentations:
 - Sequence Diagram.pdf
 
 Assumptions/Notes:
-- 
-
+- 7 eeg sites
+- 4 rounds of treatment ((flat rate of the dominant frequency + 5) * the round)
+- Shortened timings for testings:
+    - When a new session creation is paused for 10 seconds the session is deleted and the user has to reset
+    - When the session is being created, the battery drain rate is 1.0. (session is active)
+    - Outside of the new session, the normal battery drain rate is 0.01. (idle)
+ - The ui explanation is in the demo video
+ 
 Assigned Tasks:
 - Use Cases: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
 - UML Class Diagram: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
