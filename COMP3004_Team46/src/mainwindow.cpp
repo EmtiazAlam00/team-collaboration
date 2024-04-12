@@ -243,6 +243,10 @@ MainWindow::MainWindow(QWidget *parent)
                 stopGreenFlashing();
                 setLedState(ui->blueLED, "off");
 
+                sessionTimer.stop();
+                analysisTimer.stop();
+                deliverTreatmentTimer.stop();
+                
                 break;
 
             case DeviceState::On:
