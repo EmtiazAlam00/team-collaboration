@@ -64,7 +64,8 @@ Assigned Tasks:
 Needed external libraries and how to install/compile them:
 fftw3: Download from: https://www.fftw.org/download.html 
 full installation instructions: https://www.fftw.org/fftw3_doc/Installation-on-Unix.html
-Summary of how to install: 
+
+- Summary of how to install: 
     1. Download the .tar.gz
     2. Extract files using "tar -xvf"
     3. Run the following commands within the folder (the make and make install may need to be run with sudo - 'sudo make'):
