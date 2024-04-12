@@ -64,6 +64,11 @@ References:
 - Team3-dena_prototype
 - Heartwave
 
+GitHub Link:
+- https://github.com/EmtiazAlam/team-collaboration.git 
+
+Instructions for Compiling
+
 Needed external libraries and how to install/compile them:
 fftw3: Download from: https://www.fftw.org/download.html 
 full installation instructions: https://www.fftw.org/fftw3_doc/Installation-on-Unix.html
