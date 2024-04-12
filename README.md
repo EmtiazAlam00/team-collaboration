@@ -60,6 +60,9 @@ Assigned Tasks:
 - Traceablility Matrix: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
 - Code: Danielle, Charles, Kaitlyn, Emtiaz, Jearina
 
+References:
+- Team3-dena_prototype
+- Heartwave
 
 Needed external libraries and how to install/compile them:
 fftw3: Download from: https://www.fftw.org/download.html 
