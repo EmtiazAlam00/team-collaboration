@@ -389,6 +389,8 @@ MainWindow::MainWindow(QWidget *parent)
             case DeviceState::SessionCompletion:
                 qDebug()<<"Session Complete"<< Qt::endl;
                 sessionTimer.stop();
+                analysisTimer.stop();
+                deliverTreatmentTimer.stop();
                 ui->sessionTimerLabel->setText("End Session");
                 if(roundCount >= 4){
                     qDebug()<< "Save session"<<Qt::endl;
@@ -480,6 +482,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     void MainWindow::menuButtonClicked() {
         qDebug() << "Menu button was clicked!";
+        if(getDeviceState() ==DeviceState::SessionPaused || getDeviceState() == DeviceState::SessionActive || getDeviceState() == DeviceState::DeliverTreatment||  getDeviceState() == DeviceState::ContactLost){
+                return;
+        }
         showMainMenuView();
         ui->dateTimeEdit->setVisible(false);
     }
