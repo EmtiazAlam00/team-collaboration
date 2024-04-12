@@ -113,10 +113,9 @@ QVector<QString> DBManager::getSessionsHistoryPC(){
 
     while (query.next()) {
         QDateTime qDt = QDateTime::fromString(query.value(1).toString(), DATE_FORMAT);
-        QString dt = qDt.toString(); // hopefully this is the date string in the correct format
+        QString dt = qDt.toString(); 
         QString id = query.value(0).toString();
 
-        // may cause an error because it's not dynamic aka no 'new'
         QString s = id+"\t"+dt;
         for (int i=1; i<15; i++){   // adding the hz to the string
             QString temp_hz = query.value(i).toString();
