@@ -15,7 +15,6 @@
 * - QVector<float> beforeBaselines: Stores the before baseline average frequencies in a vector.
 * - QVector<float> afterBaselines: Stores the after baseline average frequencies in a vector.
 *   
-*  
 *  Class Functions:
 * - Session(const QDateTime& startTime): Initializes the session’s starting time and the before and 
 * after baseline average frequency vectors are set to size 7.
@@ -35,24 +34,19 @@ class Session: public QObject{
         Session(const QDateTime& startTime);
         ~Session();
         void print();
-        //getters
+        // getters & setters
         QDateTime getStartTime();
-        float getBaselineAfter(int); // get baseline based on 1-7 and "after"/"before"
+        float getBaselineAfter(int);
         void setBefore(int i, float baselineVal);
         void setAfter(int i, float baselineVal);
-        const QVector<float>& getBeforeBaselines(){ return beforeBaselines;}
+        const QVector<float>& getBeforeBaselines(){return beforeBaselines;}
         const QVector<float>& getAfterBaselines() {return afterBaselines;}
-        //setter
-//        void setBaseline(int, QString&, const float);
 
 
     private:
-
         QDateTime startTime;
         QVector<float> beforeBaselines;
         QVector<float> afterBaselines;
-
-
 };
 
 #endif // SESSION_H
