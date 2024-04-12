@@ -30,8 +30,6 @@ bool DBManager::DBInit(){
         qInfo() << "Table created successfully";
     }
 
-
-
     return neuresetDB.commit();
 
 }
@@ -87,22 +85,6 @@ bool DBManager::deleteSessions(){
     return query.exec();
 }
 
-//Session* DBManager::getSession(const QDateTime& date_time){
-//    QSqlQuery query;
-//    neuresetDB.transaction();
-
-//    query.prepare("SELECT date_time as session_ID, length FROM sessions");
-//    query.bindValue(":date_time", date_time.toString(DATE_FORMAT));
-//    query.exec();
-
-//    QDateTime dt = QDateTime::fromString(query.value(0).toString(), DATE_FORMAT);
-//    int id = query.value(1).toInt();
-//    int length = query.value(2).toInt();
-//    Session* s = new Session(id, length, dt);
-
-//    qInfo() << "Got the session from "<< date_time;
-//    return s;
-//}
 QVector<QString> DBManager::getSessionsHistoryDevice(){
     QSqlQuery query;
     QVector<QString> qSessionList;
