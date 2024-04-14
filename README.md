@@ -31,10 +31,11 @@ Files:
 - session.h
 
 Diagrams & Documentations:
-- State Diagram.pdf
-- UML Diagram.pdf
-- Use Cases.pdf
-- Sequence Diagram.pdf (contains diagrams for scenarios covering normal and safety operation)
+- StateDiagram.pdf
+- UMLDiagram.pdf
+- UseCases.pdf
+- SequenceDiagram.pdf (contains diagrams for scenarios covering normal and safety operation)
+- UMLClassDiagram.pdf
 
 Assumptions/Notes:
 - 7 eeg sites
