@@ -34,11 +34,7 @@ Diagrams & Documentations:
 - State Diagram.pdf
 - UML Diagram.pdf
 - Use Cases.pdf
-- Sequence Diagram.pdf
-- Sequence Diagram.pdf
-- Sequence Diagram.pdf
-- Sequance Diagram.pdf
-- Sequence Diagram.pdf
+- Sequence Diagram.pdf (contains diagrams for scenarios covering normal and safety operation)
 
 Assumptions/Notes:
 - 7 eeg sites
