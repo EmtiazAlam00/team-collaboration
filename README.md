@@ -39,7 +39,7 @@ Diagrams & Documentations:
 
 Assumptions/Notes:
 - 7 eeg sites
-- 4 rounds of treatment ((flat rate of the dominant frequency + 5) * the round)
+- 4 rounds of treatment (flat rate of the dominant frequency + (5 * the round))
 - Shortened timings for testings:
     - When a new session creation is paused for 10 seconds the session is deleted and the user has to reset
     - When the session is being created, the battery drain rate is 1.0. (session is active)
